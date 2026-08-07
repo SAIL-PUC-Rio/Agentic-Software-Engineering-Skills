@@ -12,9 +12,9 @@ npx skills update implement
 
 ## What it does
 
-`implement` builds the work described in a spec or a set of tickets — driving it through test-driven development, typechecking, and the full test suite, then handing off to review and committing to the current branch.
+`implement` builds the work described in a spec or a set of tickets — driving it through test-driven development, typechecking, and the full test suite, following `CODING_STANDARDS.md` and respecting ADRs in the area it touches, then committing to the current branch and closing out with [evidence](https://aihero.dev/skills-evidence).
 
-It does **not** decide what to build. The spec is already settled and the seams are already agreed; `implement` executes that plan rather than reopening it. It is the hands, not the head — the thinking happened upstream.
+It does **not** decide what to build. The spec is already settled and the seams are already agreed; `implement` executes that plan rather than reopening it. It is the hands, not the head — the thinking happened upstream. It also doesn't review its own work — that's a separate, deliberate step you reach for once implementation is done; publishing proof that the work is done is a different concern, and that one *is* automatic.
 
 ## When to reach for it
 
@@ -26,7 +26,7 @@ Reach for it once the work is written down as a spec or split into tickets and y
 
 The idea `implement` runs on is the **seam** — the stable interface a feature is tested at, chosen before any code is written. It doesn't invent seams mid-build; it uses the ones already picked (during [to-spec](https://aihero.dev/skills-to-spec)) and writes tests against them via [tdd](https://aihero.dev/skills-tdd). Working at pre-agreed seams is what keeps the implementation honest: the tests target something durable, so the code underneath can move without the tests moving.
 
-Around that core it keeps the loop tight — typecheck often, run single test files as it goes, run the whole suite once at the end — then closes out with a review pass and a commit to the current branch.
+Around that core it keeps the loop tight — typecheck often, run single test files as it goes, run the whole suite once at the end — then commits to the current branch and hands off to [evidence](https://aihero.dev/skills-evidence), which publishes what actually got verified to the task's issue tracker.
 
 ## Where it fits
 
@@ -36,4 +36,4 @@ Around that core it keeps the loop tight — typecheck often, run single test fi
 grill-with-docs → to-spec → to-tickets → implement → code-review
 ```
 
-Reach for it after the work has been specced and sequenced, not before. Its key neighbours are [to-tickets](https://aihero.dev/skills-to-tickets), which produces the tickets — each declaring its blocking edges — that it works through, and [tdd](https://aihero.dev/skills-tdd), which it drives internally to write the tests at each seam before running its own [code-review](https://aihero.dev/skills-code-review) pass and committing. When you're unsure which skill or flow fits, [ask-matt](https://aihero.dev/skills-ask-matt) routes you.
+Reach for it after the work has been specced and sequenced, not before. Its key neighbours are [to-tickets](https://aihero.dev/skills-to-tickets), which produces the tickets — each declaring its blocking edges — that it works through, [tdd](https://aihero.dev/skills-tdd), which it drives internally to write the tests at each seam, and [evidence](https://aihero.dev/skills-evidence), which it drives internally once more after committing to publish an auditable pack. It commits its own work but doesn't review it; run [code-review](https://aihero.dev/skills-code-review) yourself once implementation is done. When you're unsure which skill or flow fits, [ask-matt](https://aihero.dev/skills-ask-matt) routes you.
