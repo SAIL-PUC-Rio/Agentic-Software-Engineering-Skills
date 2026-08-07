@@ -5,24 +5,26 @@ Reads structured ticket data — a JSON list of
 ``{"id": ..., "title": ..., "blocked_by": [...]}`` objects — validates the
 graph, and computes a deterministic topological level assignment.
 
-This module is the shared engine both renderers (terminal, Mermaid) build on
-in later tickets. It does not infer, add, or second-guess any semantic
-dependency: it only validates and orders what it is given.
+This module is the shared engine both renderers (terminal, Mermaid) build on.
+It does not infer, add, or second-guess any semantic dependency: it only
+validates and orders what it is given.
 
 Importable surface:
     validate_and_level(tickets: list[dict]) -> LeveledGraph
     DependencyGraphError
 
 CLI usage:
-    python3 dependency_graph.py < tickets.json
+    python3 dependency_graph.py < tickets.json                    # plain
+    python3 dependency_graph.py --format terminal < tickets.json  # diagram
 
-Later tickets (terminal rendering, Mermaid export) are expected to add
-``--format`` flags to the CLI below that branch on the same LeveledGraph
-this module already produces, rather than re-deriving validation or leveling.
+A later ticket (Mermaid export) is expected to add another ``--format``
+value to the CLI below that branches on the same LeveledGraph this module
+already produces, rather than re-deriving validation or leveling.
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from dataclasses import dataclass
@@ -228,7 +230,147 @@ def _render_plain_text(graph):
     return "\n".join(lines)
 
 
+# Degradation thresholds for the terminal diagram (see _needs_degraded_
+# rendering). Each one is a proxy for "would the boxed diagram still be
+# skimmable at a glance": too many tickets overall means too much vertical
+# scroll; too many tickets in one level means the diagram can't show
+# "parallel roots" as a small cluster; too much fan-out/fan-in on a single
+# ticket means its "blocks:"/"blocked by:" annotation line would itself wrap
+# or dominate the screen. Past any of these, a flat level+edges listing
+# (already produced by _render_plain_text) stays readable while box art
+# would not.
+_MAX_TOTAL_TICKETS_FOR_DIAGRAM = 14
+_MAX_TICKETS_PER_LEVEL_FOR_DIAGRAM = 6
+_MAX_FAN_FOR_DIAGRAM = 4
+
+
+def _compute_blocks_by_id(graph):
+    """Reverse of blocked_by: for each ticket, which tickets it blocks.
+
+    Returns a dict of id -> sorted tuple of dependent ticket IDs, computed
+    entirely from the already-validated LeveledGraph (no re-validation).
+    """
+    blocks = {ticket.id: [] for ticket in graph.tickets}
+    for ticket in graph.tickets:
+        for blocker in ticket.blocked_by:
+            blocks[blocker].append(ticket.id)
+    return {ticket_id: tuple(sorted(ids)) for ticket_id, ids in blocks.items()}
+
+
+def _needs_degraded_rendering(graph):
+    """Decide whether the boxed diagram would stay legible for this graph.
+
+    Pure function of the LeveledGraph — the model never has to judge this;
+    the script owns the decision so the same graph always degrades (or
+    doesn't) the same way.
+    """
+    if len(graph.tickets) > _MAX_TOTAL_TICKETS_FOR_DIAGRAM:
+        return True
+    if any(
+        len(level) > _MAX_TICKETS_PER_LEVEL_FOR_DIAGRAM
+        for level in graph.by_level()
+    ):
+        return True
+    blocks_by_id = _compute_blocks_by_id(graph)
+    for ticket in graph.tickets:
+        if len(ticket.blocked_by) > _MAX_FAN_FOR_DIAGRAM:
+            return True
+        if len(blocks_by_id[ticket.id]) > _MAX_FAN_FOR_DIAGRAM:
+            return True
+    return False
+
+
+def _render_ticket_box(ticket):
+    """Render a single ticket as a fixed Unicode box, sized to its content."""
+    label = f"{ticket.id} — {ticket.title}"
+    width = len(label) + 2
+    top = "┌" + "─" * width + "┐"
+    middle = "│ " + label + " │"
+    bottom = "└" + "─" * width + "┘"
+    return [top, middle, bottom]
+
+
+def _render_diagram(graph):
+    """Render the graph as level-grouped boxes with blocking-direction
+    annotations.
+
+    Tickets are grouped by level (top to bottom = earlier to later in the
+    dependency order, matching LeveledGraph's own (level, id) ordering).
+    Each box is annotated with its incoming edges ("blocked by:") and
+    outgoing edges ("blocks:") rather than drawn as connector lines —
+    routing arbitrary connector lines between boxes across levels is exactly
+    the kind of fragile ASCII art this format is meant to avoid, and the
+    annotation form still communicates direction, fan-out, and fan-in
+    unambiguously.
+    """
+    blocks_by_id = _compute_blocks_by_id(graph)
+    lines = []
+    for level_index, level_tickets in enumerate(graph.by_level()):
+        lines.append(f"Level {level_index} — {len(level_tickets)} ticket(s)")
+        for ticket in level_tickets:
+            lines.extend(_render_ticket_box(ticket))
+            if ticket.blocked_by:
+                lines.append(
+                    "  ◀── blocked by: " + ", ".join(sorted(ticket.blocked_by))
+                )
+            dependents = blocks_by_id[ticket.id]
+            if dependents:
+                lines.append("  └─▶ blocks: " + ", ".join(dependents))
+            lines.append("")
+    while lines and lines[-1] == "":
+        lines.pop()
+    return "\n".join(lines)
+
+
+def _render_degraded_listing(graph):
+    """Fallback for graphs too large/dense for the boxed diagram.
+
+    Reuses the same deterministic level+edges listing the plain-text CLI
+    format already produces, prefixed with a note explaining why the boxed
+    diagram was skipped.
+    """
+    return (
+        "Dependency graph (level + edges listing; diagram degraded for "
+        "readability — see _needs_degraded_rendering):\n\n"
+        + _render_plain_text(graph)
+    )
+
+
+def _render_terminal(graph):
+    """Render a LeveledGraph for a terminal: boxed diagram, or a degraded
+    level+edges listing when the graph is too large or dense to stay
+    legible as boxes (see _needs_degraded_rendering).
+    """
+    if not graph.tickets:
+        return "(no tickets)"
+    if _needs_degraded_rendering(graph):
+        return _render_degraded_listing(graph)
+    return _render_diagram(graph)
+
+
+def _parse_args(argv):
+    parser = argparse.ArgumentParser(
+        description=(
+            "Validate and level a ticket dependency graph read as JSON "
+            "from stdin."
+        )
+    )
+    parser.add_argument(
+        "--format",
+        choices=["plain", "terminal"],
+        default="plain",
+        help=(
+            "Output format: 'plain' (default) prints one line per ticket; "
+            "'terminal' prints a Unicode diagram, degrading to a "
+            "level+edges listing for large or dense graphs."
+        ),
+    )
+    return parser.parse_args(argv)
+
+
 def main(argv=None):
+    args = _parse_args(sys.argv[1:] if argv is None else argv)
+
     raw = sys.stdin.read()
     try:
         data = json.loads(raw)
@@ -242,7 +384,10 @@ def main(argv=None):
         print(f"Error: {exc}", file=sys.stderr)
         return 1
 
-    output = _render_plain_text(graph)
+    if args.format == "terminal":
+        output = _render_terminal(graph)
+    else:
+        output = _render_plain_text(graph)
     if output:
         print(output)
     return 0
