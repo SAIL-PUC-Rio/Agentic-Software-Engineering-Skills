@@ -16,10 +16,12 @@ Importable surface:
 CLI usage:
     python3 dependency_graph.py < tickets.json                    # plain
     python3 dependency_graph.py --format terminal < tickets.json  # diagram
+    python3 dependency_graph.py --format mermaid < tickets.json   # Mermaid
+    python3 dependency_graph.py --format both < tickets.json      # both
 
-A later ticket (Mermaid export) is expected to add another ``--format``
-value to the CLI below that branches on the same LeveledGraph this module
-already produces, rather than re-deriving validation or leveling.
+``--format both`` is the mode ``to-tickets`` actually invokes: it prints the
+terminal diagram (or its degraded listing) followed by the Mermaid source,
+both derived from a single ``validate_and_level()`` call.
 """
 
 from __future__ import annotations
@@ -214,10 +216,10 @@ def validate_and_level(tickets):
 def _render_plain_text(graph):
     """Default CLI output: one line per ticket, grouped by level.
 
-    This is intentionally the only rendering this module ships. Terminal
-    (#4) and Mermaid (#5) rendering are separate, later CLI ``--format``
-    modes that consume the same LeveledGraph produced by
-    validate_and_level() instead of re-deriving validation or leveling.
+    This is the base rendering this module ships. Terminal (#4) and Mermaid
+    (#5) rendering are separate CLI ``--format`` modes that consume the same
+    LeveledGraph produced by validate_and_level() instead of re-deriving
+    validation or leveling.
     """
     lines = []
     for group in graph.by_level():
@@ -348,6 +350,116 @@ def _render_terminal(graph):
     return _render_diagram(graph)
 
 
+# Characters that are structurally significant inside a Mermaid quoted node
+# label (`id["..."]`) and must not reach the output literally, mapped to the
+# Mermaid-documented numeric HTML entity that displays as that character
+# without being re-parsed as syntax. "#" itself is escaped first-and-always
+# by walking the string one character at a time (never via sequential
+# str.replace calls) so an entity this function inserts — e.g. the "#" in
+# "#quot;" — can never be picked up and re-escaped by a later substitution.
+# Verified against the real `mermaid` npm package (v11.16.1) parser: quotes,
+# brackets, parens, braces, pipe, angle brackets, and "#" all round-trip
+# through this map as valid `graph TD` syntax, and the same titles fail to
+# parse without it (see ticket #5 evidence pack for the verification
+# transcript).
+_MERMAID_LABEL_ESCAPES = {
+    '"': "#quot;",
+    "#": "#35;",
+    "[": "#91;",
+    "]": "#93;",
+    "(": "#40;",
+    ")": "#41;",
+    "{": "#123;",
+    "}": "#125;",
+    "|": "#124;",
+    "<": "#60;",
+    ">": "#62;",
+    "\n": " ",
+    "\r": " ",
+}
+
+
+def _mermaid_escape_label(text):
+    """Escape text for safe use inside a Mermaid quoted node label.
+
+    Single left-to-right pass over ``text`` — never a chain of ``str.replace``
+    calls — so an entity this function inserts (e.g. the "#" in "#quot;")
+    is never itself picked up and re-escaped by a later substitution.
+    """
+    return "".join(_MERMAID_LABEL_ESCAPES.get(ch, ch) for ch in text)
+
+
+def _mermaid_node_ids(graph):
+    """Assign each ticket a safe, deterministic, unique Mermaid node ID.
+
+    Ticket IDs are arbitrary non-empty strings (validate_and_level() places
+    no other constraint on them), but Mermaid node IDs are safest as a
+    restricted identifier charset. Rather than special-case which raw
+    ticket IDs happen to already be safe, every node ID is derived the same
+    way: keep only ASCII letters/digits/underscore from the ticket ID
+    (everything else becomes "_"), always prefix with "n_" so the result
+    can never start with a digit or be empty, and disambiguate any
+    resulting collisions with a numeric suffix.
+
+    Iterates graph.tickets in its existing (level, id) order, which is
+    itself deterministic, so assignment is stable for a given input.
+
+    Returns a dict of ticket id -> mermaid node id.
+    """
+    node_ids = {}
+    used = set()
+    for ticket in graph.tickets:
+        sanitized = "".join(
+            ch if (ch.isalnum() and ch.isascii()) or ch == "_" else "_"
+            for ch in ticket.id
+        )
+        candidate = "n_" + sanitized
+        suffix = 0
+        while candidate in used:
+            suffix += 1
+            candidate = f"n_{sanitized}_{suffix}"
+        used.add(candidate)
+        node_ids[ticket.id] = candidate
+    return node_ids
+
+
+def _render_mermaid(graph):
+    """Render a LeveledGraph as Mermaid ``graph TD`` syntax.
+
+    Nodes are declared in the graph's existing (level, id) order (matching
+    the terminal renderer's top-to-bottom reading). Edges point from
+    prerequisite to dependent — i.e. for a ticket blocked by another, the
+    arrow is ``blocker --> ticket`` — matching the "blocked by:"/"blocks:"
+    direction the terminal renderer (#4) already uses, and are emitted in
+    (ticket, sorted blocker) order, so output is fully deterministic.
+
+    Node labels are "<id> — <title>", HTML-entity-escaped via
+    _mermaid_escape_label so quotes, brackets, parens, braces, pipes, angle
+    brackets, and literal "#" characters in either the ID or the title can
+    never break out of the quoted label or be misread as Mermaid syntax.
+    """
+    node_ids = _mermaid_node_ids(graph)
+    lines = ["graph TD"]
+    for ticket in graph.tickets:
+        label = _mermaid_escape_label(f"{ticket.id} — {ticket.title}")
+        lines.append(f'    {node_ids[ticket.id]}["{label}"]')
+    for ticket in graph.tickets:
+        for blocker in sorted(ticket.blocked_by):
+            lines.append(f"    {node_ids[blocker]} --> {node_ids[ticket.id]}")
+    return "\n".join(lines)
+
+
+def _render_both(graph):
+    """Render terminal output followed by Mermaid source, from one graph.
+
+    This is the mode ``to-tickets`` actually invokes. Both renderers consume
+    the same already-validated-and-leveled ``graph`` — the structure is
+    derived exactly once (by the caller's single validate_and_level() call);
+    this function only renders it twice, in two unrelated output formats.
+    """
+    return _render_terminal(graph) + "\n\n" + _render_mermaid(graph)
+
+
 def _parse_args(argv):
     parser = argparse.ArgumentParser(
         description=(
@@ -357,12 +469,15 @@ def _parse_args(argv):
     )
     parser.add_argument(
         "--format",
-        choices=["plain", "terminal"],
+        choices=["plain", "terminal", "mermaid", "both"],
         default="plain",
         help=(
             "Output format: 'plain' (default) prints one line per ticket; "
             "'terminal' prints a Unicode diagram, degrading to a "
-            "level+edges listing for large or dense graphs."
+            "level+edges listing for large or dense graphs; 'mermaid' "
+            "prints Mermaid 'graph TD' source; 'both' prints the terminal "
+            "output followed by the Mermaid source, from a single "
+            "validated graph (this is the mode to-tickets invokes)."
         ),
     )
     return parser.parse_args(argv)
@@ -386,6 +501,10 @@ def main(argv=None):
 
     if args.format == "terminal":
         output = _render_terminal(graph)
+    elif args.format == "mermaid":
+        output = _render_mermaid(graph)
+    elif args.format == "both":
+        output = _render_both(graph)
     else:
         output = _render_plain_text(graph)
     if output:
