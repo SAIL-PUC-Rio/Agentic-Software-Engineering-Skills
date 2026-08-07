@@ -61,13 +61,25 @@ Present the proposed breakdown as a numbered list. For each ticket, show:
 - **Blocked by**: which other tickets (if any) must complete first
 - **What it delivers**: the end-to-end behaviour this ticket makes work
 
+Immediately after the list, render the dependency graph — don't hand-draw it, don't re-derive it, don't reason about layout yourself. Serialize the same tickets used for the list above as the canonical `{id, title, blocked_by}` JSON (`id` is each ticket's number, `blocked_by` is the list of blocking tickets' `id`s) and pipe it via stdin to the graph script bundled with this skill:
+
+```bash
+python3 scripts/dependency_graph.py --format both
+```
+
+**Validation gate:** if the script exits non-zero — a cycle or an unknown/invalid `blocked_by` reference reported on stderr — do not show that output to the user. Fix the decomposition that produced the error (the offending blocking edges or ticket boundaries) and rerun the script before proceeding. Never present an unvalidated or errored graph.
+
+Once the script exits cleanly, include its output inline in your response, in this order: the terminal diagram first, the Mermaid source after as a secondary/complementary block.
+
+Then apply the orthogonality diagnostic from step 3's `<orthogonality-rules>` above to the rendered graph — the change-impact test and the decomposition-smell check — looking at what the graph makes visible: unexpected chains, tickets that seem unrelated but end up coupled, suspicious density, or a missing prefactor boundary. Don't restate that guidance here; apply it to what the script just rendered.
+
 Ask the user:
 
 - Does the granularity feel right? (too coarse / too fine)
 - Are the blocking edges correct — does each ticket only depend on tickets that genuinely gate it?
 - Should any tickets be merged or split further?
 
-Iterate until the user approves the breakdown.
+Iterate until the user approves the breakdown. If the breakdown changes, re-serialize and rerun the graph script — the graph shown to the user must always match the current proposal.
 
 ### 5. Publish the tickets to the configured tracker
 
