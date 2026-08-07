@@ -41,6 +41,10 @@ The whole skill turns on one distinction. A **horizontal** slice ships one layer
 
 Before slicing, `to-tickets` looks for prefactoring — "make the change easy, then make the easy change" — and orders that work first. It then quizzes you on the breakdown (granularity, blocking edges, what to merge or split) before publishing anything, and publishes blockers first so each ticket's "Blocked by" can reference a real ticket.
 
+## Orthogonality, alongside tracer bullets
+
+Tracer bullets get a ticket's insides right; **orthogonality** gets the boundary between tickets right. For every proposed ticket, `to-tickets` asks: if this ticket's requirement changed substantially, which other tickets would also have to change? The ideal answer is none — though some dependencies are intrinsic to the problem. Orthogonality means independence of *responsibility*, not separation by file or layer, so two tickets can legitimately touch the same code. When tickets fail the test, `to-tickets` merges the overlapping slices, redefines their responsibilities, or prefactors an explicit interface first — rather than adding a blocking edge to paper over the overlap. A dense, highly-connected dependency graph is the tell that this hasn't happened yet.
+
 ## The wide-refactor exception
 
 One shape breaks the tracer-bullet rule: a **wide refactor** — a single mechanical change (rename a column, retype a shared symbol) whose **blast radius** fans across the whole codebase, so one edit breaks thousands of call sites at once and no vertical slice can land green. `to-tickets` slices it as **expand–contract** instead: expand (add the new form beside the old so nothing breaks), migrate (move call sites over in batches sized by blast radius, one ticket per batch, CI green throughout because the old form still exists), then contract (delete the old form once no caller remains). When even the batches can't stay green alone, they share an integration branch that all block a final integrate-and-verify ticket, and green is promised only there.

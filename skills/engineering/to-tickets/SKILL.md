@@ -24,7 +24,7 @@ Look for opportunities to prefactor the code to make the implementation easier. 
 
 ### 3. Draft vertical slices
 
-Break the work into **tracer bullet** tickets.
+Break the work into **tracer bullet** tickets, then check the boundaries between them for **orthogonality**. The two are complementary, not redundant: tracer bullets buy completeness *within* a ticket — each slice is a whole vertical path through every layer — while orthogonality buys independence *between* tickets — no ticket's boundary leaks into its neighbours'.
 
 <vertical-slice-rules>
 
@@ -37,7 +37,21 @@ Break the work into **tracer bullet** tickets.
 
 Give each ticket its **blocking edges** — the other tickets that must complete before it can start. A ticket with no blockers can start immediately.
 
-**Wide refactors are the exception to vertical slicing.** A **wide refactor** is one mechanical change — rename a column, retype a shared symbol — whose **blast radius** fans across the whole codebase, so a single edit breaks thousands of call sites at once and no vertical slice can land green. Don't force it into a tracer bullet; sequence it as **expand–contract**. First expand: add the new form beside the old so nothing breaks. Then migrate the call sites over in batches sized by blast radius (per package, per directory), each batch its own ticket blocked by the expand, keeping CI green batch to batch because the old form still exists. Finally contract: delete the old form once no caller remains, in a ticket blocked by every migrate batch. When even the batches can't stay green alone, keep the sequence but let them share an integration branch that all block a final integrate-and-verify ticket — green is promised only there.
+<orthogonality-rules>
+
+Apply this test to every proposed ticket: **"If the requirement behind this ticket changed substantially, which other tickets would also have to change?"** The ideal answer is "none" — though some dependencies are intrinsic to the problem and can't be designed away.
+
+Orthogonality means independence of **behavioral responsibility**, not separation by file, module, or layer — two tickets may legitimately touch the same files. What matters is whether changing one ticket's requirement forces a change in another ticket's requirement, not whether their diffs overlap.
+
+When the test fails — when several tickets would have to change together — reconsider the boundary rather than accepting it: merge the overlapping slices into one ticket, redefine what each ticket is responsible for, or prefactor an explicit interface between them before the dependent work starts (see step 2, "Explore the codebase").
+
+Blocking edges must represent genuine prerequisites — one ticket's output is actually required as another's input — never a substitute for a clean boundary. If a "blocks" edge exists mainly to paper over two tickets sharing responsibility, that's a signal to redraw the boundary, not to add the edge.
+
+A dense, highly-connected dependency graph is a **decomposition smell**: it usually means responsibilities are overlapping rather than orthogonal, and the tickets should be reconsidered — not accepted as the shape of the work.
+
+</orthogonality-rules>
+
+**Wide refactors are the exception to vertical slicing.** A **wide refactor** is one mechanical change — rename a column, retype a shared symbol — whose **blast radius** fans across the whole codebase, so a single edit breaks thousands of call sites at once and no vertical slice can land green. Don't force it into a tracer bullet; sequence it as **expand–contract**. First expand: add the new form beside the old so nothing breaks. Then migrate the call sites over in batches sized by blast radius (per package, per directory), each batch its own ticket blocked by the expand, keeping CI green batch to batch because the old form still exists. Finally contract: delete the old form once no caller remains, in a ticket blocked by every migrate batch. When even the batches can't stay green alone, keep the sequence but let them share an integration branch that all block a final integrate-and-verify ticket — green is promised only there. This sequence is exempt from the orthogonality test above: expand, migrate, and contract batches are intentionally chained by design, so their blocking edges stay genuine prerequisites rather than the decomposition smell the test warns against.
 
 ### 4. Quiz the user
 
