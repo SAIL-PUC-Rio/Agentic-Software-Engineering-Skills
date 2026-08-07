@@ -18,6 +18,13 @@ A `wayfinder` unit — a child **Issue** of a `wayfinder:map` holding a *questio
 **Triage role**:
 A canonical state-machine label applied to an **Issue** during triage (e.g. `needs-triage`, `ready-for-afk`). Each role maps to a real label string in the **Issue tracker** via `docs/agents/triage-labels.md`.
 
+**Evidence pack**:
+The structured, progressively-disclosed Markdown artifact `evidence` produces after `implement` commits — connects completion claims to reproducible verification, published as a comment/record on the task's **Issue tracker** entry. Not a narrative summary.
+_Avoid_: report, writeup, summary
+
+**Claim**:
+A single assertion about completed work (an acceptance criterion, an invariant) that an **Evidence pack** ties to proof. Carries a stable ID (`CLM-001`) and a status from a fixed vocabulary (`PASS`/`FAIL`/`PARTIAL`/`NOT_RUN`/`NOT_APPLICABLE`/`UNKNOWN`) — never silently upgraded to `PASS`.
+
 ## Relationships
 
 - An **Issue tracker** holds many **Issues**
