@@ -1,0 +1,5 @@
+interface:
+  display_name: "Implement Parallel"
+  short_description: "Implement a spec's independent subissues concurrently"
+policy:
+  allow_implicit_invocation: false
