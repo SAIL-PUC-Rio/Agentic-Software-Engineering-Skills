@@ -26,6 +26,8 @@ concerns:               # Concern IDs this Topic is expected to touch
   - <concern-id>
 created_at: <ISO date>
 resolved_at:            # absent/empty until record resolution sets it
+children:               # topic-slugs this Topic was split into; absent/empty unless this Topic is a split aggregator
+  - <topic-slug>
 ---
 
 ## Notes
@@ -34,6 +36,8 @@ resolved_at:            # absent/empty until record resolution sets it
 ```
 
 `status` is a **two-state** field, deliberately narrower than a Concern's seven states: a Topic is either still open (not yet closed by a Session) or `resolved`. Whether it's additionally *blocked* or *claimed* is never stored as a third status value — it's computed from `blocked_by` and `claimed_by`, per the operations below. This keeps "blocked" and "frontier" derived rather than two competing sources of truth for the same fact.
+
+**`children` and the aggregator convention.** A Topic with a non-empty `children` list is an **aggregator**, produced only by the split mechanic ([work-a-map.md](./work-a-map.md#alternative-outcomes)) — it is a link to the Topics it was divided into, not a status, so `status` is never overloaded to mean "split." An aggregator's own question was never answered, only divided, so it never runs **record resolution** and never carries `resolved_at`; it stays `status: open` with whatever `claimed_by` it already had from being claimed before the split (this repo has no explicit "unclaim" step yet — see [work-a-map.md](./work-a-map.md#alternative-outcomes)'s "Left open" note — so an aggregator's claim is left in place the same way). That open-plus-claimed combination is also what keeps it off the Frontier without needing a special case: **list frontier**'s third condition below (`claimed_by` absent or empty) already excludes it. `children` is written exactly once, by the split mechanic, at split time — no other operation reads or writes it.
 
 ## The five operations
 
