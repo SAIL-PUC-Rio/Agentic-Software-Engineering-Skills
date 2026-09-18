@@ -100,7 +100,32 @@ Counts come from that Perspective's Concern Resolution pages under `concerns/` (
 
 ## Delegated work
 
-<Research/Prototype/Unblocking entries per CONTEXT.md's Delegated work definition, each naming the Topic it unblocks.>
+<One entry per Research, Prototype, or Unblocking task Delegated work record (`CONTEXT.md`'s definition), created and resolved per [work-a-map.md](./work-a-map.md#delegated-work). Delegated work is a Map-level record, not a Topic — it has no file of its own under `topics/`; it lives here, inline. Newest entries last.>
+
+### dw-<slug>
+
+```markdown
+- type: research | prototype | unblocking-task
+- question: <the one question this entry exists to answer, stated plainly>
+- blocks: <topic-slug>              # the one Topic this entry unblocks; a Topic names this entry back via its own blocked_by: [dw:dw-<slug>]
+- status: pending | in-progress | resolved
+- created_at: <ISO date>
+- resolved_at:                      # absent until resolved
+- parallel_safe_with:               # dw-ids this entry was determined safe to run alongside, per the concurrency overlap check (work-a-map.md#delegated-work); empty/absent if untested or unsafe
+  - <dw-id>
+- checklist:                        # unblocking-task only — one concrete, human-actionable line per item; absent for research/prototype
+  - <e.g. "get read access to the events warehouse">
+- result:                           # absent until resolved
+    answer: <the answer this entry settled>
+    evidence: <what backs the answer — links, artifacts, findings file, prototype branch>
+    sources: <primary sources, if research; the prototype's branch/commit, if prototype; the human's report, if unblocking-task>
+    affected_concerns:
+      - <concern-id>
+    new_topics:
+      - <topic-slug>                # any newly discovered Topic created from this result, or empty if none
+```
+
+A `dw-<slug>` ID is stable once created — never renamed, for the same reason a topic-slug isn't (it's referenced from a Topic's `blocked_by`). `status` starts `pending`, moves to `in-progress` once a Skill tool call (research/prototype) or a human checklist (unblocking-task) is actually underway, and `resolved` once the result is written back (per [work-a-map.md](./work-a-map.md#when-a-delegated-result-returns)). Rendering this section in the Map means listing every entry not yet `resolved` prominently (these are the ones keeping a Topic in Blocked) and resolved entries below them or trimmed to one line — a reader should see at a glance what's still in flight.
 
 ## Out of scope
 
