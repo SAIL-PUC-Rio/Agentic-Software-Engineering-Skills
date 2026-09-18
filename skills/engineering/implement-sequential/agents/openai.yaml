@@ -1,0 +1,5 @@
+interface:
+  display_name: "Implement Sequential"
+  short_description: "Implement a spec's subissues one at a time"
+policy:
+  allow_implicit_invocation: false

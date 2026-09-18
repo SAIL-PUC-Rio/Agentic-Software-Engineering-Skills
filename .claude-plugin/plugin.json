@@ -30,6 +30,8 @@
     "./skills/engineering/to-tickets",
     "./skills/engineering/wayfinder",
     "./skills/engineering/implement",
+    "./skills/engineering/implement-sequential",
+    "./skills/engineering/implement-parallel",
     "./skills/engineering/prototype",
     "./skills/engineering/research",
     "./skills/engineering/domain-modeling",

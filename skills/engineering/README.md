@@ -14,6 +14,8 @@ Reachable only when you type them (Claude Code: `disable-model-invocation: true`
 - **[to-spec](./to-spec/SKILL.md)** — Turn the current conversation into a spec and publish it to the issue tracker.
 - **[to-tickets](./to-tickets/SKILL.md)** — Break any plan, spec, or conversation into a set of tracer-bullet tickets, each declaring its blocking edges — text in a local file, or native blocking links on a real tracker.
 - **[implement](./implement/SKILL.md)** — Build the work described by a spec or set of tickets, driving `/tdd` at pre-agreed seams and following `CODING_STANDARDS.md`/ADRs, then committing and closing out with `/evidence`.
+- **[implement-sequential](./implement-sequential/SKILL.md)** — Build every subissue of a spec issue one at a time: a fresh subagent per subissue, briefed with `implement`'s own steps, closed out with `/evidence` before the next one starts.
+- **[implement-parallel](./implement-parallel/SKILL.md)** — Build every independent subissue of a spec issue in waves: one subagent per subissue in its own worktree, merged back by the subagent that wrote it, proven green with the full suite before the next wave opens.
 - **[wayfinder](./wayfinder/SKILL.md)** — Plan a huge chunk of work — more than one agent session can hold — as a shared map of decision tickets on the issue tracker, resolved one at a time until the way to the destination is clear.
 
 ## Model-invoked
