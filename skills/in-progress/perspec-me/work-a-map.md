@@ -144,7 +144,7 @@ Compute this once, when the second of the two entries is created (or whenever bo
 
 ## `status [map]`
 
-Print, from the low-resolution Map alone and nothing else:
+Print, from the Map's own sections:
 
 - **Destination**
 - **Perspective resolution** coverage table
@@ -152,8 +152,17 @@ Print, from the low-resolution Map alone and nothing else:
 - **Blocked**
 - **Fog**
 - **Delegated work**
+- **Handoff readiness** — per [map.md](./map.md#the-map-file)'s template, recomputed fresh each time this verb runs, the same "regenerate, don't hand-edit" discipline as Frontier/Blocked — never just the last-written rendering trusted at face value:
+  1. **Destination reached**, **Fog empty**, and **no material Frontier/Blocked Topic** — read straight off the Destination, Fog, Frontier, and Blocked sections already printed above; no extra file needs opening for these three. "Relevant" Fog excludes anything already given its own line in Out of scope. A remaining Frontier/Blocked Topic only stops counting against completion once the user has explicitly waved it off as non-material, recorded on the Map (a line in Handoff readiness or Decisions so far) — `status` never makes that call unilaterally; an open Topic nobody has explicitly waved off always counts against completion.
+  2. **Every relevant Concern `resolved`/`deferred`/`not-applicable` — hard gate.** From the Perspective resolution table's counts, any Concern still `unexamined`/`open`/`partial` fails this outright, named by ID. For every Concern currently `deferred` or `not-applicable`, open that one Concern's Resolution page — scoped to its "Current resolution" section only — and confirm it carries a justification (`SKILL.md` section d's hard rule, extended to `deferred` for the same reason). A Concern missing one blocks completion outright; name it by ID (e.g. "d16-golden-dataset: not-applicable, no justification"). This is the one point where `status` reads beyond the Map file itself, and only the specific pages this check needs — never every page under `concerns/`.
+  3. **Contradictions between Concern resolutions — hard gate.** Among the Resolution pages opened for step 2 (or opened on demand here if a contradiction is suspected outside that set), check for two pages, or two Topics' recorded decisions, stating incompatible things about a shared Concern or an overlapping requirement. This is a mechanical check run every time completion is being assessed, never smoothed over silently. An unresolved one blocks completion exactly like a missing justification — name both sides. One the user has already explicitly accepted as tolerable (recorded as its own line in Decisions so far) does not block completion, but must still be named as accepted, not omitted from the report.
+  4. **User confirmation — always human-only, never inferred.** Read Handoff readiness's own recorded confirmation line (e.g. "confirmed complete by <name>, <date>"). Absent, this alone blocks completion regardless of how every other criterion looks — a later `status` call has nowhere else to find this fact, since it is never inferred from the state of the other criteria.
 
-This is a read of the Map file's own sections, verbatim or lightly rendered — `status` never opens an individual Concern Resolution page or a Topic file. The optional `[map]` argument selects which Map when a project has more than one, the same map-slug resolution `resume` uses in its step 1.
+  **Reporting the result:**
+  - **Complete** (every criterion above holds, including a confirmation line already recorded from this or an earlier session): state plainly that the Map is complete, and **tell the user to run `to-spec`** — phrased exactly as an instruction to the human, never as a Skill tool call. `to-spec` is user-invoked; per [.agents/invocation.md](../../../.agents/invocation.md), no skill — this one included — may reach a user-invoked skill through the Skill tool, however tempting it is to just call it here. Handing off is the last thing this verb does; it never itself opens or edits anything outside this Map's own files.
+  - **Incomplete**: name exactly what's blocking completion — which of the six criteria above don't hold, and for the Concern-justification and contradiction gates specifically, the exact Concern ID(s) or the specific pages/Topics in conflict, never a vague "some concerns need work."
+
+This still never opens a Topic file, and opens a Concern Resolution page only when steps 2 or 3 above require it (scoped to the pages the completion check actually needs, not a blanket read of `concerns/`) — the rest of `status`'s output stays a read of the Map file's own sections, verbatim or lightly rendered, as before. Reaching or reporting completion never produces or edits product code — the Map/Topic/Resolution-page files under `requirements/perspec-me/<map-slug>/` are the only artifacts this verb, or any part of `perspec-me`, ever writes. The optional `[map]` argument selects which Map when a project has more than one, the same map-slug resolution `resume` uses in its step 1.
 
 ## `review <concern-id>`
 
