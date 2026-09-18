@@ -1,6 +1,8 @@
 # Map-charting: turning a multi-session effort into a Map
 
-This is the procedure `SKILL.md`'s routing section hands off to when a seed doesn't fit one Session, or when the user invokes `map <effort-or-destination>` directly. It produces a durable Map (`CONTEXT.md`'s definition) and the initial set of Topics under it, using the local Markdown backend's five topic-store operations defined in [local-backend.md](./local-backend.md). It never runs the interview itself — resolving a Topic once it's charted is the direct-session procedure in `SKILL.md`, run per Topic, later.
+This is the procedure `SKILL.md`'s routing section hands off to when a seed doesn't fit one Session, or when the user invokes `map <effort-or-destination>` directly. It produces a durable Map (`CONTEXT.md`'s definition) and the initial set of Topics under it, using ADR 0002's five topic-store operations — against whichever backend the [Backend decision](#backend-decision) step below picks for this Map, local Markdown ([local-backend.md](./local-backend.md)) or tracker ([tracker-backend.md](./tracker-backend.md)). It never runs the interview itself — resolving a Topic once it's charted is the direct-session procedure in `SKILL.md`, run per Topic, later.
+
+**Backend-generic links.** Every `local-backend.md#<anchor>` reference below names one of ADR 0002's five topic-store operations, not the local backend specifically — read it as whichever backend this Map's [Backend decision](#backend-decision) picked. [local-backend.md](./local-backend.md) and [tracker-backend.md](./tracker-backend.md) define the same five operations under the same headings and anchors, so every link resolves correctly either way; only a reference to backend-specific mechanics (e.g. a Topic file's frontmatter shape, which has no tracker-backend equivalent) names its file explicitly.
 
 ## Fit-in-one-session decision
 
@@ -17,6 +19,18 @@ State the outcome plainly, out loud, before continuing:
 - **Needs a Map** — several independent decisions, spanning three or more Perspectives, or the seed itself frames a multi-phase effort (an epic, a feature with several unresolved sub-questions, an initiative rather than a single question). Continue to the Destination step below.
 
 This is a judgment call, not an arithmetic threshold — when genuinely unsure, say which way the estimate leans and why, rather than picking silently.
+
+## Backend decision
+
+Once the outcome above is **needs a Map**, decide — once, now, before Destination is even proposed — which topic-store backend this Map uses:
+
+- **Tracker backend** ([tracker-backend.md](./tracker-backend.md)) when all three hold: `docs/agents/issue-tracker.md` exists in this repo, it names a tracker whose `gh` (or equivalent) mechanics this environment can actually drive, and the Wayfinder skill ([skills/engineering/wayfinder/SKILL.md](../../engineering/wayfinder/SKILL.md)) is available in this environment.
+- **Local Markdown backend** ([local-backend.md](./local-backend.md)) otherwise — the existing, unconditional fallback.
+
+State the outcome plainly, the same way the fit decision above is stated out loud. Record it immediately so no later `resolve`/`resume`/`status`/`review` call on this Map has to re-derive it:
+
+- As the first line of the project-side Map file (`**Backend:** local` or `**Backend:** tracker`) — [The Map file](#the-map-file) below shows both shapes. The Map file may exist with just this line and Destination pending, the same way it may already exist pre-confirmation today.
+- On the tracker backend only, additionally as a line in the Wayfinder map issue's own `## Notes` section once that issue exists (the map-charting procedure's own "Create the map" step, [wayfinder/SKILL.md](../../engineering/wayfinder/SKILL.md#chart-the-map)) — e.g. "Topics on this map are resolved by `perspec-me`; see `requirements/perspec-me/<map-slug>/` for Perspective resolution and Resolution pages." This second recording happens later, once the issue is created; the backend choice itself is already fixed here and never reconsidered.
 
 ## Destination — confirm before any Topic exists
 
@@ -143,9 +157,33 @@ A `dw-<slug>` ID is stable once created — never renamed, for the same reason a
 **Invariant:** reaching every checkbox above, and the handoff itself, never produces or edits product code. The Map file, its Topic files, and its Concern Resolution pages under this Map's own `requirements/perspec-me/<map-slug>/` are the only artifacts `perspec-me` ever writes — during wayfinding and at handoff alike. A completed Map is not a spec and not an implementation plan; handing off means telling the user to run `to-spec` (a user-invoked skill — an instruction to the human, never a Skill tool call, per [.agents/invocation.md](../../../.agents/invocation.md)), not calling it.
 ```
 
-## Topic files
+### On the tracker backend, this file is leaner
 
-One file per Topic, structure and the create/claim/frontier/blockers/resolution mechanics defined in [local-backend.md](./local-backend.md) — this document only decides *when* a Topic is created (once it's phraseable, never before) and *what question it holds*, never how the file itself is written; that's local-backend.md's job, so the mechanics are defined once.
+The template above is the **local backend's** shape. On the tracker backend, Wayfinder's own map issue already holds Destination, Notes, Decisions so far, Not yet specified (Fog), and Out of scope ([wayfinder/SKILL.md](../../engineering/wayfinder/SKILL.md#the-map-body)) — duplicating them here would give a Map two competing sources of truth for the same facts. So the tracker-backend project file, at the same path (`requirements/perspec-me/<map-slug>/MAP.md`), carries only what the Wayfinder issue does *not* hold:
+
+```markdown
+# <Effort name> — Map
+
+**Backend:** tracker — Wayfinder map: [<map issue title>](<issue-url>)
+
+## Perspective resolution
+
+<Same table shape as the local backend's, above — one row per Perspective actually touched, counts from that Perspective's Concern Resolution pages under concerns/.>
+
+## Links
+
+- Wayfinder map issue: [<map issue title>](<issue-url>) — Destination, Notes, Decisions so far, Fog, and Out of scope live there, not here.
+- Concern Resolution pages: [concerns/](concerns/)
+- Perspective pages: [perspectives/](perspectives/) (created on demand, per Perspective resolution above)
+```
+
+Current understanding, Decisions so far, Frontier, Blocked, and Out of scope are never rendered in this file on the tracker backend — read them from the Wayfinder map issue itself (its body, plus a live **list frontier** run, [tracker-backend.md](./tracker-backend.md#list-frontier)) instead of a local snapshot that could drift from it.
+
+**Known gap, out of scope for issue #21:** Delegated work and Handoff readiness have no defined tracker-backend home yet — Wayfinder has no native equivalent of either. A Delegated-work entry might map onto Wayfinder's own research/prototype/task ticket types directly, and Handoff readiness might live as a checklist comment on the Wayfinder map issue, but neither is decided here; a future ticket needs to design it, the same way [local-backend.md](./local-backend.md#claim)'s "claimed_by is never cleared" left an explicit unclaim gap for later work.
+
+## Topic files (local backend) / Topic issues (tracker backend)
+
+One Topic file (local backend) or one child issue (tracker backend) per Topic — the shape and the create/claim/frontier/blockers/resolution mechanics are defined once, in whichever backend file this Map uses ([local-backend.md](./local-backend.md) or [tracker-backend.md](./tracker-backend.md)). This document only decides *when* a Topic is created (once it's phraseable, never before) and *what question it holds*, never how it's stored — that's the backend file's job.
 
 ## Resolution-layer convention once a Map exists
 

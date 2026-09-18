@@ -248,3 +248,41 @@ Procedure in [issue-seed.md](./issue-seed.md), run against a bare seed recognize
 - **Act.** `create topic` would create `topic-promote-to-engineering.md` under that Map with the extracted question (not the issue's title) and `concerns: []` (none applied, stated explicitly in the Topic's own Notes rather than left blank without explanation). `wire blockers` would set `blocked_by: [topic-map-handoff-shape, topic-tracker-backend-readiness]` — the two apparent blockers from the issue's own list that correspond to still-open Topics on this Map; #17 and #18 are not wired since their corresponding work is already done and nothing in this constructed Map tracks them as open Topics.
 - **Remote-issue safety, verified.** No `gh issue comment`, `gh issue edit`, or `gh issue close` call was made against #22 at any point in this trace — only `gh issue view` reads.
 - **Finding worth recording:** this trace is honest evidence that not every real repo issue turns on a genuine PerSpecML Concern — the extraction and classification steps still produce a clean, actionable answer (a new Topic, correctly placed, correctly blocked) even when the Concern-mapping step comes back empty. A future trace against an actual ML-enabled consuming project's issue would be expected to exercise the Concern-mapping step non-trivially; this repo's own issues, being about a skill-authoring tool rather than an ML system, are a weak fit for that part specifically, and the procedure says so rather than fabricating a mapping to look thorough.
+
+### Tracker-backend smoke tests
+
+Procedure in [tracker-backend.md](./tracker-backend.md), run against a Wayfinder map issue instead of local Topic files. Both traces below are **reasoned through by hand against constructed, illustrative examples — never executed against this repo's real tracker.** This ticket's own instructions forbid creating, commenting on, closing, or editing any real issue in `Esduard/skills` while doing this work; every `gh` command shown below is what *would* run, not a command actually issued.
+
+1. **Wayfinder delegates a topic to `perspec-me`.** Construct two illustrative ticket bodies. First, a perspec-me Topic:
+
+   ```markdown
+   ## Question
+
+   Which signals should feed the ranker?
+
+   resolver: perspec-me
+   concerns:
+     - m5-performance-metrics
+     - d16-golden-dataset
+   ```
+
+   Second, for contrast, an ordinary Wayfinder grilling ticket with no `resolver:` line:
+
+   ```markdown
+   ## Question
+
+   Should the ranker retrain nightly or weekly?
+   ```
+
+   Trace [wayfinder/SKILL.md](../../engineering/wayfinder/SKILL.md#work-through-the-map)'s edited step 3 by hand against both: scan the body's lines for one matching `resolver:\s*(\S+)`. The first body matches, capturing `perspec-me` — step 3 calls the Skill tool with `"perspec-me"` instead of the default grilling pair. The second body has no such line — no match — so step 3 falls through unchanged to "call the Skill tool twice, for 'grilling' and 'domain-modeling'," exactly as it did before this edit. Expect: the hook is additive and concretely verifiable, not just asserted in prose — a ticket without the line is provably unaffected.
+
+2. **A topic splits into new issues.** Constructed, illustrative example — no real issues created or touched — under a fictitious Wayfinder map issue #100 ("Recommendation feature — Map"): a child issue #105, "How should the recommendation feature handle personalization?", body carrying `resolver: perspec-me` and `concerns: [m5-performance-metrics, d16-golden-dataset, u3-onboarding-flow, i2-serving-latency]`, assigned (claimed) by the driving session. Mid-`resolve`, the split signal fires (per [work-a-map.md](./work-a-map.md#alternative-outcomes)'s test — three unrelated threads, not one coherent 2-5-line summary) and the user confirms three independent questions, split by question rather than by Concern (four Concerns, three new issues — `d16-golden-dataset` relevant to two of them, the expected N:N shape). Traced `gh` commands (none executed):
+
+   - `gh issue create --title "Which signals should feed personalization ranking?" --body "$(cat <<'EOF'\nPart of #100\n\n## Question\n\nWhich signals should feed personalization ranking?\n\nresolver: perspec-me\nconcerns:\n  - m5-performance-metrics\n  - d16-golden-dataset\nEOF\n)"` → hypothetically creates #106.
+   - `gh issue create ...` with the same shape for "How should cold-start users be handled?" (`concerns: [u3-onboarding-flow, d16-golden-dataset]`) → hypothetically #107.
+   - `gh issue create ...` for "What latency budget applies to personalization scoring?" (`concerns: [i2-serving-latency]`) → hypothetically #108.
+   - Wiring `topic-coldstart` (#107) as depending on `topic-ranking-signals` (#106), the one apparent dependency: `gh api repos/Esduard/skills/issues/106 --jq .id` to read #106's database id, then `gh api --method POST repos/Esduard/skills/issues/107/dependencies/blocked_by -F issue_id=<106's database id>`.
+   - Aggregator: `gh issue comment 105 --body "Split into: [Which signals should feed personalization ranking?](#106), [How should cold-start users be handled?](#107), [What latency budget applies to personalization scoring?](#108)"` — a **comment**, the allowed write; #105's body and labels are left untouched, #105 is **not** closed (`record resolution` never runs on it, mirroring the local backend's aggregator rule exactly) and keeps its existing assignee.
+   - `list frontier`, traced (not queried live) against this resulting state: #106 and #108 qualify (open, unblocked, unassigned, `resolver: perspec-me`); #107 is excluded by its one open blocker (#106) and would render in Blocked instead; #105 is excluded from both because it still carries an assignee (the retained claim) — matching the local backend's aggregator behavior with no special case needed.
+
+   **Confirmed: no real `gh issue create`, `gh issue comment`, `gh issue close`, or `gh api .../dependencies/blocked_by` call was made against `Esduard/skills` for this trace** — every command above is illustrative, reasoned through by hand the same way #16-#20's subagents traced local-backend mechanics against constructed fixtures, never executed against the real repo.
