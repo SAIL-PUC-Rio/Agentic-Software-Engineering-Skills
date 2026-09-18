@@ -2,7 +2,7 @@
 
 ADR 0002 (topic-store seam) defines five operations — **create topic**, **claim**, **list frontier**, **record resolution**, **wire blockers** — independent of where a Topic lives. This file is the concrete mechanics for the local Markdown backend (no tracker, no Wayfinder): plain files under a consuming project's `requirements/perspec-me/<map-slug>/`. The future issue-tracker backend (issue #21) implements the same five names against Wayfinder's own mechanics, per `docs/agents/issue-tracker.md`'s Wayfinding-operations section — that file is this one's sibling, not a competing definition.
 
-**Every** perspec-me procedure that touches a Topic — the map-charting procedure in [map.md](./map.md), the direct-session procedure in `SKILL.md`, and the future `resolve`/`resume`/`status`/`review` verbs (issue #16) — writes against these five operations, never against an ad hoc `Read`/`Write`/`Edit` of a topic file invented on the spot. If a step needs a sixth thing (e.g. "rename a topic"), that's a gap in this file to fix here, not a one-off workaround in the caller.
+**Every** perspec-me procedure that touches a Topic — the map-charting procedure in [map.md](./map.md), the direct-session procedure in `SKILL.md`, and the `resolve`/`resume`/`status`/`review` verbs in [work-a-map.md](./work-a-map.md) — writes against these five operations, never against an ad hoc `Read`/`Write`/`Edit` of a topic file invented on the spot. If a step needs a sixth thing (e.g. "rename a topic"), that's a gap in this file to fix here, not a one-off workaround in the caller.
 
 ## Where things live
 
@@ -44,6 +44,10 @@ Write a new file at `requirements/perspec-me/<map-slug>/topics/<topic-slug>.md` 
 ### claim
 
 Add (or set) `claimed_by: <session identifier>` in the Topic file's frontmatter. This is the session's first write to the Topic file, mirroring `docs/agents/issue-tracker.md`'s `gh issue edit <n> --add-assignee @me` — a claim happens before any interview round starts, not after. A `<session identifier>` is anything that uniquely names the session (a date-stamped slug is enough for a solo project); its only job is to make "claimed" visible to `list frontier`.
+
+**Refusal rule:** a Topic that is `status: open` and already has `claimed_by` set to a session identifier different from the claiming session's own refuses the claim — report which session holds it and stop, don't overwrite `claimed_by`. Claiming succeeds as a no-op if `claimed_by` already equals the claiming session's own identifier (re-affirming its own claim, e.g. on `resume`), and succeeds normally if `claimed_by` is absent/empty. A `status: resolved` Topic's `claimed_by` is historical attribution left by **record resolution**, not an active claim — it never triggers this refusal, whether the claiming session is the same one or a different one.
+
+**Finding a session's claimed Topic:** scan every file in `topics/` and return the one that is `status: open` with `claimed_by` equal to the given session identifier — this is the same directory scan `list frontier` already makes, filtered on `status` and `claimed_by` instead of the three Frontier conditions, needing no new storage or index. There is at most one such file per session, per the one-Topic-per-Session rule (`work-a-map.md`'s concurrency section); a scan finding more than one is itself a bug to flag, not a case to silently pick from.
 
 ### list frontier
 
