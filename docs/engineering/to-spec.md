@@ -27,6 +27,51 @@ The spec exists because context windows end. Everything you settled while [grill
 
 So it does not validate anything, and it does not decide anything. It captures what was decided, in your project's own vocabulary, so that a fresh session can pick the work up without you re-explaining it. Anything the spec asserts that you never actually said is a defect.
 
+## Stories are typed
+
+The spec's story section is not fixed to user stories. Before drafting it, `to-spec` sorts the work you already agreed into one of four kinds, each with its own required fields and a stable ID:
+
+| Kind | ID | Reach for it when the work is about | Core fields |
+| --- | --- | --- | --- |
+| User Story | `US-###` | An actor-visible capability or workflow | actor, capability, value |
+| Data Story | `DS-###` | Acquiring, preparing, or managing data or context | goal, source, data type, approximate quantity |
+| Model Story | `MS-###` | Training, evaluating, or deploying a learned model | learning goal, learning type, data source, expected performance |
+| Agent Story | `AS-###` | An [agent](https://www.aihero.dev/ai-coding-dictionary/agent) built around a foundation model | agent goal, possible tasks, available artifacts, autonomy, expected performance |
+
+Only the kinds the work uses appear, and a feature can mix them. A consumed foundation model is an Agent Story, not a Model Story: the Model kind is for when the model itself is what you build. Work that fits no kind, such as a refactor, stays an Implementation Decision instead of being forced into a story. A field you never settled is written as unresolved, not filled in.
+
+A short ML feature, a support-ticket classifier, comes out like this:
+
+```markdown
+## Stories
+
+### US-001 — See a suggested category
+
+**Type:** User Story
+
+As a support agent, I want a suggested category on each new ticket, so that I can route it faster.
+
+### DS-001 — Labeled ticket history
+
+**Type:** Data Story
+
+- Goal: train and evaluate the classifier
+- Source: closed tickets from the helpdesk export
+- Data type: ticket text with a category label
+- Approximate quantity: Unresolved: volume was never discussed
+
+### MS-001 — Ticket classifier
+
+**Type:** Model Story
+
+- Learning goal: predict the ticket category from its text
+- Learning type: supervised classification
+- Data source: DS-001
+- Expected performance: Unresolved: no accuracy target was agreed
+```
+
+Older specs with a `## User Stories` section still read as user stories and are not rewritten.
+
 ## Seams before prose
 
 Before it writes a word, `to-spec` sketches the **seams** the feature will be tested at, and checks them with you. It prefers seams that already exist to new ones, and takes the highest seam it can — the ideal number across a change is one.
@@ -54,7 +99,7 @@ Mostly for the agent, and it reads that way — complete, dense, reference-heavy
 Nothing keeps it in sync, so in practice it is a snapshot of what you knew at that moment, and it goes stale the first time implementation teaches you something. Treat it as throwaway once the work ships. The artifacts meant to outlive it are your `CONTEXT.md` and your ADRs — if something learned during implementation deserves to last, it belongs there, not in an edited spec.
 
 **My work is a refactor or a module boundary, not a feature. Does the template fit?**
-Less well, and this is a known limitation. The template leans hard on user stories, which is the wrong shape for architectural work — you end up writing stories nobody asked for around decisions that are really about interfaces and invariants. Lean on the implementation-decisions and testing-decisions sections instead, and let the durable architectural calls land as ADRs via [grill-with-docs](https://aihero.dev/skills-grill-with-docs) rather than trying to make the spec carry them.
+Better than it used to. Stories are optional now, so a refactor can have few or none, and the spec rests on its implementation decisions and testing decisions. Let the durable architectural calls land as ADRs via [grill-with-docs](https://aihero.dev/skills-grill-with-docs) rather than trying to make the spec carry them.
 
 **Will it check the tracker for related work, or cite the ADRs it's respecting?**
 No to both. It reads and respects the ADRs covering the area it touches, but it doesn't link them, and it doesn't search the tracker for overlapping issues before drafting — so a spec can quietly duplicate work someone already filed. Search the tracker yourself first if the area is busy.
@@ -68,6 +113,7 @@ Very large specs can outgrow what a tracker issue will serve back cleanly, and t
 - It puts the seams to you before it writes, and proposes as few as it can get away with.
 - It comes back in your project's nouns, not generic product-management boilerplate.
 - Every decision in it is one you can remember making. Nothing was invented to fill a section.
+- Stories carry a type and an ID, only for kinds your work uses, and a gap in your decisions shows as "Unresolved" rather than a made-up number.
 - The out-of-scope section has real things in it — the things you refused are usually the most useful lines on the page.
 
 ## Where it fits

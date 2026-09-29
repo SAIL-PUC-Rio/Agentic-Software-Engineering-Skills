@@ -28,17 +28,23 @@ The problem that the user is facing, from the user's perspective.
 
 The solution to the problem, from the user's perspective.
 
-## User Stories
+## Stories
 
-A LONG, numbered list of user stories. Each user story should be in the format of:
+Typed, ID'd entries, one per story. Before drafting, classify the already-agreed work using [STORY-TYPES.md](./STORY-TYPES.md): it holds the selection rules (including Model vs Agent and the branch that keeps non-behavioral work as an Implementation Decision), each kind's required core fields, and the entry format.
 
-1. As an <actor>, I want a <feature>, so that <benefit>
+There are four built-in kinds: User Story (`US-###`), Data Story (`DS-###`), Model Story (`MS-###`), and Agent Story (`AS-###`). Emit only the kinds the work actually uses, and never an empty section for a kind that isn't relevant. A feature can mix kinds. Architectural or refactoring specs may have few or no stories; leave this section out rather than forcing decisions into story shape.
 
-<user-story-example>
-1. As a mobile bank customer, I want to see balance on my accounts, so that I can make better informed decisions about my spending
-</user-story-example>
+Record a required field the conversation never settled as `Unresolved: <what is missing>`. Never invent metrics, thresholds, quantities, or actors.
 
-This list of user stories should be extremely extensive and cover all aspects of the feature.
+<story-example>
+### US-001 — See the balance
+
+**Type:** User Story
+
+As a mobile bank customer, I want to see balance on my accounts, so that I can make better informed decisions about my spending.
+</story-example>
+
+A spec that still has `## User Stories` reads as all `kind: user`; never rewrite historical specs.
 
 ## Implementation Decisions
 
