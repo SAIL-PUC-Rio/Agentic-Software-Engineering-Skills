@@ -15,6 +15,10 @@ The executable-specification counterpart of `tdd`: `tdd` turns behavior into tes
 
 Read `CONTEXT.md` (if it exists) so actors and entities use the project's glossary, and respect ADRs in the area.
 
+## Modes
+
+Inferred from the task, not a flag. Given source behavior and no Gherkin, **construct**. Given existing Gherkin (a `.feature` file or block) to check, improve, or critique, **review**. If both, construct then review.
+
 ## Construct workflow
 
 1. **Identify the observable behavior.** What an actor can see or verify from outside, per the source. Quote or cite the source line for each behavior.
@@ -25,6 +29,10 @@ Read `CONTEXT.md` (if it exists) so actors and entities use the project's glossa
 6. **Report unresolved behavior.** Where the source never decided an outcome, condition, or actor, do not write a guessed `Then`. List it under `### Unresolved behavior`, stating what is missing and which scenario it blocks. Leave that scenario out or stub it as a comment.
 7. **Return** the Gherkin, then the `Unresolved behavior` list (omit if empty), then a one-line gate result per attribute.
 
+## Review workflow
+
+Load [references/review-mode.md](references/review-mode.md). It parses the Gherkin into feature/scenario/step units, applies the same 12-question gate, and returns findings grouped by attribute (`PASS`/`REVISE`/`NOT_APPLICABLE`, citing question numbers) plus a **revised Gherkin block**. Always propose the revision, never only a list of violations. The revision keeps the original semantics; change behavior only where a cited source supports it, otherwise list it under `### Unresolved behavior`.
+
 ## Examples
 
-[examples/good.feature](examples/good.feature) passes the gate. [examples/bad.feature](examples/bad.feature) violates several named attributes, each annotated. Read them to calibrate; do not copy their domain.
+[examples/good.feature](examples/good.feature) passes the gate. [examples/bad.feature](examples/bad.feature) violates several named attributes, each annotated. [examples/bad.review.md](examples/bad.review.md) and [examples/good.review.md](examples/good.review.md) record the review-mode output for each. Read them to calibrate; do not copy their domain.
