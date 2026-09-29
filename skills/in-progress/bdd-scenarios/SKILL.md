@@ -1,0 +1,30 @@
+---
+name: bdd-scenarios
+description: Construct Gherkin Feature files from an already-agreed requirement or story and revise them through a scenario quality gate. Use when the user wants BDD scenarios, Gherkin, Given/When/Then, or executable acceptance criteria written from decided behavior.
+---
+
+# BDD Scenarios
+
+The executable-specification counterpart of `tdd`: `tdd` turns behavior into tests, this turns an agreed requirement into Gherkin that names the behavior before any test exists. Scenarios are specifications of **known** behavior. They are never a way to decide behavior nobody decided.
+
+## When it applies
+
+- A requirement, story, or spec already states observable behavior and the user wants it as `Feature`/`Scenario`.
+- Not for pure refactors, data pipelines, or internals with no externally observable behavior. Say so and stop.
+- Not a requirements interview. If the source is silent, report it (step 6), do not ask-and-invent.
+
+Read `CONTEXT.md` (if it exists) so actors and entities use the project's glossary, and respect ADRs in the area.
+
+## Construct workflow
+
+1. **Identify the observable behavior.** What an actor can see or verify from outside, per the source. Quote or cite the source line for each behavior.
+2. **Identify actors and domain entities**, using the glossary terms verbatim. Do not coin synonyms.
+3. **Draft** `Feature` / `Scenario` / `Given` / `When` / `Then`. One behavioral intention per scenario; title states the action and outcome; steps say what, not how. Load [references/gherkin-guidelines.md](references/gherkin-guidelines.md) before drafting.
+4. **Run the quality gate.** Load [references/quality-model.md](references/quality-model.md) and check the feature, every scenario, and every step against all 12 questions. Each attribute ends as `PASS`, `REVISE`, or `NOT_APPLICABLE`. No numeric scores.
+5. **Revise** every `REVISE` finding, then re-run the gate on what changed. Do not change meaning unless the source supports it.
+6. **Report unresolved behavior.** Where the source never decided an outcome, condition, or actor, do not write a guessed `Then`. List it under `### Unresolved behavior`, stating what is missing and which scenario it blocks. Leave that scenario out or stub it as a comment.
+7. **Return** the Gherkin, then the `Unresolved behavior` list (omit if empty), then a one-line gate result per attribute.
+
+## Examples
+
+[examples/good.feature](examples/good.feature) passes the gate. [examples/bad.feature](examples/bad.feature) violates several named attributes, each annotated. Read them to calibrate; do not copy their domain.

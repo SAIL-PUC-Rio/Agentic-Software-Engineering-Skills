@@ -1,0 +1,3 @@
+interface:
+  display_name: "BDD Scenarios"
+  short_description: "Write Gherkin scenarios through a quality gate"
