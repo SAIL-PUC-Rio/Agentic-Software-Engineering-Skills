@@ -67,7 +67,8 @@ Each smell reads *what it is* → *how to fix*; match it against the diff:
 
 - The diff command and commit list.
 - The path or fetched contents of the spec.
-- The brief: "Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words."
+- If the spec, or the ticket the commits close, cites `BS-###` scenarios: the full Gherkin of each cited scenario, the story IDs it lists, and the Testing Decisions line naming its seam. When a ticket cites BS IDs, the ticket names the scope. Without a citation but with a `## Behavioral Specifications` section in the spec, use every BS entry that the diff plausibly touches.
+- The brief: "Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Where BS scenarios were provided, also check the diff against each one: does the behavior in the Given/When/Then hold at the seam, and does a test at that seam cover it? For every BS-related finding, quote the `BS-###` ID and the scenario step at fault; for anything else, quote the spec line. Do not treat `### Unresolved behavior` as a requirement — flag code that guesses at it as scope creep. Judge against the scenarios and requirements, never against how a story is phrased; stories of any kind, legacy `## User Stories`, or none at all are all valid. Under 400 words."
 
 If the spec is missing, skip the Spec sub-agent and note this in the final report.
 

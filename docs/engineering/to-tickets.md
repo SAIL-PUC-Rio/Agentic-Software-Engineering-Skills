@@ -30,6 +30,10 @@ This is the rule people break most often, and the consequences are well document
 
 Two things happen before anything is published. `to-tickets` looks for prefactoring — "make the change easy, then make the easy change" — and orders that work first. Then it presents the breakdown as a numbered list and quizzes you on it: is the granularity right, are the blocking edges real, should anything merge or split. Nothing reaches the tracker until you approve, and that quiz is the place to push back.
 
+## Story and behavior IDs
+
+When the spec has `## Stories` or `## Behavioral Specifications`, each ticket cites the story IDs it delivers and the `BS-###` scenarios it makes pass, with the Gherkin copied in so the ticket stands alone. Those IDs are the trace that [implement](https://aihero.dev/skills-implement) and [code-review](https://aihero.dev/skills-code-review) pick up downstream. Nothing depends on how a story is worded. A legacy spec with `## User Stories`, or a spec with no stories at all, still splits into tickets; the tickets simply carry no trace lines rather than invented IDs.
+
 ## Blocking edges
 
 The edges are the point of the artifact. They read two ways depending on the tracker:

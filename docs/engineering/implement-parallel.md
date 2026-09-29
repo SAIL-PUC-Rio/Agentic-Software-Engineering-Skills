@@ -20,6 +20,8 @@ A **wave** is every subissue on the frontier at once — the set with no open bl
 
 Inside a wave: subagents run in parallel, each in its own worktree. Merging back isn't batched onto the orchestrating agent — each subagent merges its own branch, and if that merge conflicts, that same subagent runs [resolving-merge-conflicts](https://aihero.dev/skills-resolving-merge-conflicts) itself, since it's the one that still holds the intent behind its own diff. Only once a wave is fully merged does the full test suite run — once, not per branch, because a wave's branches can conflict in ways no single branch's tests would catch.
 
+Each subagent's brief carries its subissue's cited story and BS IDs, the scenario Gherkin, and the matching Testing Decisions seams, so a `BS-###` scenario is driven red-green at its seam. A subissue with no BS IDs is driven from its acceptance criteria.
+
 ## Common questions
 
 **Why does each subagent merge its own branch instead of the orchestrator doing it once at the end?**

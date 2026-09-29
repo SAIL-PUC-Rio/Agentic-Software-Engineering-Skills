@@ -40,6 +40,10 @@ A run is five beats, in order:
 
 One run covers one ticket. The tickets [to-tickets](https://aihero.dev/skills-to-tickets) produces are tracer-bullet vertical slices sized to fit a single fresh [context window](https://www.aihero.dev/ai-coding-dictionary/context-window), so the intended rhythm is: clear context, implement one ticket, commit, clear again. Each ticket is self-contained, which is what makes the previous ticket's context disposable.
 
+## Behavior scenarios
+
+If the ticket or spec names `BS-###` scenarios, each one becomes a behavior to drive red-green through [tdd](https://aihero.dev/skills-tdd) at the seam the spec's Testing Decisions assigns to that ID. The scenario says what to observe; the test at the seam is still yours to write. Unresolved behavior in the spec is not built from a guess. Tickets and specs without BS IDs, including legacy `## User Stories` specs, run as before from the acceptance criteria. The same brief is passed to the subagents in [implement-sequential](https://aihero.dev/skills-implement-sequential) and [implement-parallel](https://aihero.dev/skills-implement-parallel).
+
 ## Pre-agreed seams
 
 The idea the skill runs on is the **seam**: the public boundary you observe behaviour at, without reaching inside. Tests live at seams. Working at a seam agreed before any code is written is what keeps the tests durable, because the implementation underneath can be rewritten without the tests moving.

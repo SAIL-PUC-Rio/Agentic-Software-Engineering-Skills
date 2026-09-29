@@ -18,6 +18,8 @@ The core idea is the same **frontier** [to-tickets](https://aihero.dev/skills-to
 
 Each subagent only ever sees one subissue. That's deliberate: the previous subissue's context is disposable the moment its commit and evidence pack exist, which is the same discipline `implement`'s own docs describe for a human clearing context between tickets — this skill just automates the clearing.
 
+Each subagent's brief carries the subissue's cited story and BS IDs, the scenario Gherkin, and the matching Testing Decisions seams, so a `BS-###` scenario is driven red-green at its seam. A subissue with no BS IDs is driven from its acceptance criteria.
+
 ## Common questions
 
 **Why not just have the subagent call `/implement` itself?**
