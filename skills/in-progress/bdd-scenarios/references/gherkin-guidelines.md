@@ -22,10 +22,10 @@
 
 ## Steps
 
-- Business language from `CONTEXT.md`, with the proper actor. One term per concept.
+- Business language from `CONTEXT.md`, with the proper actor (for a developer-facing spec, the component's own vocabulary; the actor may be a component or collaborator, see [developer-facing.md](developer-facing.md)). One term per concept.
 - Every step earns its place: drop steps and details that do not change the meaning (Q4, Q10).
 - Unambiguous: no "properly", "correctly", "some", "appropriate"; give the concrete expected result the source states (Q12).
-- `Then` steps assert something a person or external system can observe.
+- `Then` steps assert something a person, external system, or (developer-facing) the component's caller can observe at its interface.
 
 ## Declarative over imperative
 

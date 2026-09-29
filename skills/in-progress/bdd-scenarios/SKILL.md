@@ -5,15 +5,22 @@ description: Construct Gherkin Feature files from an already-agreed requirement 
 
 # BDD Scenarios
 
-The executable-specification counterpart of `tdd`: `tdd` turns behavior into tests, this turns an agreed requirement into Gherkin that names the behavior before any test exists. Scenarios are specifications of **known** behavior. They are never a way to decide behavior nobody decided.
+The executable-specification counterpart of `tdd`: `tdd` turns behavior into tests, this turns an agreed requirement into Gherkin that names the behavior before any test exists. Scenarios are specifications of **known** behavior, for one of two audiences (below). They are never a way to decide behavior nobody decided.
 
 ## When it applies
 
 - A requirement, story, or spec already states observable behavior and the user wants it as `Feature`/`Scenario`.
-- Not for pure refactors, data pipelines, or internals with no externally observable behavior. Say so and stop.
+- Not for a pure refactor with **no** behavior change: nothing to specify. Say so and stop.
 - Not a requirements interview. If the source is silent, report it (step 6), do not ask-and-invent.
 
 Read `CONTEXT.md` (if it exists) so actors and entities use the project's glossary, and respect ADRs in the area.
+
+## Audience
+
+- **Customer-facing**: the behavior is visible to an end user or business person. Business-domain vocabulary from `CONTEXT.md`, actors are people or external systems.
+- **Developer-facing**: the behavior of an internal component (module, function, pipeline stage, model, agent) observable at **its own interface**. Written for developers, in the component's vocabulary (inputs, outputs, states, collaborators), still declarative. No fake end-user actor. The source must still state the behavior; never specify private structure.
+
+Infer the audience from the source (Data / Model / Agent stories are usually developer-facing). When developer-facing, load [references/developer-facing.md](references/developer-facing.md). The gate below is identical for both.
 
 ## Modes
 
@@ -35,4 +42,4 @@ Load [references/review-mode.md](references/review-mode.md). It parses the Gherk
 
 ## Examples
 
-[examples/good.feature](examples/good.feature) passes the gate. [examples/bad.feature](examples/bad.feature) violates several named attributes, each annotated. [examples/bad.review.md](examples/bad.review.md) and [examples/good.review.md](examples/good.review.md) record the review-mode output for each. Read them to calibrate; do not copy their domain.
+[examples/good.feature](examples/good.feature) passes the gate. [examples/bad.feature](examples/bad.feature) violates several named attributes, each annotated. [examples/bad.review.md](examples/bad.review.md) and [examples/good.review.md](examples/good.review.md) record the review-mode output for each. The developer-facing pair is `examples/developer-good.feature`, `examples/developer-bad.feature` and their `.review.md` records. Read them to calibrate; do not copy their domain.

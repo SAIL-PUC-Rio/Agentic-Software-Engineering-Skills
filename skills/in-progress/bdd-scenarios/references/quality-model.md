@@ -44,8 +44,10 @@ Apply Feature questions (1-2) once, Scenario questions (3-8) to every scenario, 
 | Clear | 12 | |
 | Complete | 2, 3 | |
 | Unique | 1, 5 | |
-| Ubiquitous | 9 | Terms match `CONTEXT.md`; one term per concept. |
+| Ubiquitous | 9 | Terms match `CONTEXT.md`; one term per concept. For developer-facing specs, "domain entity" may be a module type and the actor a component. |
 | Integrous | 8 | |
+
+The questions apply unchanged to developer-facing specs; how each reads is in [developer-facing.md](developer-facing.md).
 
 ## Statuses
 
