@@ -23,6 +23,8 @@ What was implemented, in one or two sentences. Whether the requested properties 
 | -------- | ------------------------ | ------ | ------------- | ------------ | ------ |
 | CLM-001  |                           |        |               |              |        |
 
+When the spec has Behavioral Specifications, add one row per in-scope `BS-###`: the scenario title as the requirement, `BS-### (STORY-###, ...)` as the source, and the seam-level test run as the verification. A BS with no verifying test is `NOT_RUN` or `NOT_APPLICABLE`.
+
 ## 3. Change inventory
 
 - **Added:**
@@ -43,6 +45,8 @@ What was implemented, in one or two sentences. Whether the requested properties 
 | Command | Exit code | Result | Evidence ID |
 | ------- | --------- | ------ | ------------ |
 |         |           |        |              |
+
+When the spec has Behavioral Specifications, also record the `bdd-scenarios` review-mode result as an EVD row (command or tool: the review; result: per-attribute findings, or `NOT_RUN` if the skill is not installed).
 
 ## 5. Engineering hygiene
 
