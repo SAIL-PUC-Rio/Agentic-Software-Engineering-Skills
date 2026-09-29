@@ -42,6 +42,8 @@ The three anti-patterns it is written to prevent:
 | Tautological | The expected value is computed the way the code computes it, so the test passes by construction. Expected values have to come from somewhere else — a known-good literal, a worked example, the spec. |
 | Horizontal slicing | A batch of tests landed before any implementation. |
 
+If `bdd-scenarios` is installed, `tdd` can lean on it to state a component's behavior before the test, derived from the parent acceptance scenario and never decided by the agent; anything the parent leaves open becomes a question. It informs what goes inside a slice and changes nothing about the loop: still one scenario at a time, no batch of tests up front.
+
 Mocks are for system boundaries only — external APIs, time, randomness, sometimes the filesystem or the database. Not your own modules.
 
 ## Common questions

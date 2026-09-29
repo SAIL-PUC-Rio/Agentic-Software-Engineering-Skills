@@ -18,7 +18,7 @@ The core idea is the same **frontier** [to-tickets](https://aihero.dev/skills-to
 
 Each subagent only ever sees one subissue. That's deliberate: the previous subissue's context is disposable the moment its commit and evidence pack exist, which is the same discipline `implement`'s own docs describe for a human clearing context between tickets — this skill just automates the clearing.
 
-Each subagent's brief carries the subissue's cited story and BS IDs, the scenario Gherkin with any audience line, and the matching Testing Decisions seams, so a `BS-###` scenario is driven red-green at its seam (a developer-facing one at its unit or module seam). A regression scenario is a constraint that must pass before and after, with no pre-existing test edited. A subissue with no BS IDs is driven from its acceptance criteria.
+Each subagent's brief carries the subissue's cited story and BS IDs, the scenario Gherkin with any audience line, and the matching Testing Decisions seams, so a `BS-###` scenario is driven red-green at its seam (a developer-facing one at its unit or module seam). A regression scenario is a constraint that must pass before and after, with no pre-existing test edited. If `bdd-scenarios` is installed, the brief also points each subagent at its during-implementation reference: derive the component scenario from the parent BS, cite it, add no behavior, and ask about any case the BS never settles. A subissue with no BS IDs is driven from its acceptance criteria.
 
 ## Common questions
 

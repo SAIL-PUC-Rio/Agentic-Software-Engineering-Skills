@@ -26,6 +26,10 @@ Infer the audience from the source (Data / Model / Agent stories are usually dev
 
 For a refactor of an existing component, the source is its **observed** behavior: its code and existing tests, cited per scenario, not a decided requirement. Load [references/regression-mode.md](references/regression-mode.md). Developer-facing, same gate, same statuses. Whatever the code and tests do not settle goes under `### Unresolved behavior`; never write a guessed `Then`.
 
+## During implementation
+
+When a developer builds a component for a customer-facing BS, load [references/during-implementation.md](references/during-implementation.md): derive the component scenario from the parent BS, trace it, add no behavior, ask about anything new.
+
 ## Modes
 
 Inferred from the task, not a flag. Given source behavior and no Gherkin, **construct**. Given existing Gherkin (a `.feature` file or block) to check, improve, or critique, **review**. If both, construct then review.

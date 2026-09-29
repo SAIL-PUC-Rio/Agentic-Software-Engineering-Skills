@@ -13,6 +13,8 @@ When exploring the codebase, read `CONTEXT.md` (if it exists) so test names and 
 
 Tests verify behavior through public interfaces, not implementation details. Code can change entirely; tests shouldn't. A good test reads like a specification — "user can checkout with valid cart" tells you exactly what capability exists — and survives refactors because it doesn't care about internal structure.
 
+If `bdd-scenarios` is installed, its `references/during-implementation.md` helps specify a component's behavior, derived from its parent BS and never decided by you, before the test; it does not change the loop below. Without it, nothing here changes.
+
 See [tests.md](tests.md) for examples and [mocking.md](mocking.md) for mocking guidelines.
 
 ## Seams — where tests go
