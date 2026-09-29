@@ -72,6 +72,18 @@ As a support agent, I want a suggested category on each new ticket, so that I ca
 
 Older specs with a `## User Stories` section still read as user stories and are not rewritten.
 
+## Custom kinds
+
+If your project needs a kind the four do not cover, define it once in `.agents/spec/story-types.yaml`. Each custom kind gets an ID prefix, a note on when to choose it, and its required fields. The same file can also narrow the built-in set, so a project with no ML work can drop Model Stories.
+
+| Situation | What `to-spec` does |
+| --- | --- |
+| No file | Uses the four built-in kinds, unchanged |
+| A configured kind fits a requirement | Uses it, even when a built-in would also fit |
+| Work fits no configured or available kind | Leaves it as an Implementation Decision and never invents a kind |
+
+For example, an `experiment` kind with prefix `ES` and fields hypothesis, intervention, evidence, and success condition turns "we think a shorter onboarding raises activation" into `ES-001`. Copy the [story-type template](https://github.com/mattpocock/skills/blob/main/skills/engineering/to-spec/STORY-TYPE-TEMPLATE.yaml) to start a file of your own.
+
 ## Seams before prose
 
 Before it writes a word, `to-spec` sketches the **seams** the feature will be tested at, and checks them with you. It prefers seams that already exist to new ones, and takes the highest seam it can — the ideal number across a change is one.

@@ -32,7 +32,7 @@ The solution to the problem, from the user's perspective.
 
 Typed, ID'd entries, one per story. Before drafting, classify the already-agreed work using [STORY-TYPES.md](./STORY-TYPES.md): it holds the selection rules (including Model vs Agent and the branch that keeps non-behavioral work as an Implementation Decision), each kind's required core fields, and the entry format.
 
-There are four built-in kinds: User Story (`US-###`), Data Story (`DS-###`), Model Story (`MS-###`), and Agent Story (`AS-###`). Emit only the kinds the work actually uses, and never an empty section for a kind that isn't relevant. A feature can mix kinds. Architectural or refactoring specs may have few or no stories; leave this section out rather than forcing decisions into story shape.
+There are four built-in kinds: User Story (`US-###`), Data Story (`DS-###`), Model Story (`MS-###`), and Agent Story (`AS-###`). If `.agents/spec/story-types.yaml` exists, it can add kinds, take precedence over the built-ins, and narrow the built-in set; [STORY-TYPES.md](./STORY-TYPES.md) has the rules and [STORY-TYPE-TEMPLATE.yaml](./STORY-TYPE-TEMPLATE.yaml) is the template to copy. Never create a kind that is not in that file or the built-in set. Emit only the kinds the work actually uses, and never an empty section for a kind that isn't relevant. A feature can mix kinds. Architectural or refactoring specs may have few or no stories; leave this section out rather than forcing decisions into story shape.
 
 Record a required field the conversation never settled as `Unresolved: <what is missing>`. Never invent metrics, thresholds, quantities, or actors.
 

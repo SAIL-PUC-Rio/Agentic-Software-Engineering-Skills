@@ -4,7 +4,7 @@ How `/to-spec` classifies already-agreed work into typed Stories. This file only
 
 ## Selection rules
 
-Classify each requirement or intent on its own, in this order. Take the first branch that fits.
+Classify each requirement or intent on its own, in this order. Take the first branch that fits. If the project has a story-types file, apply [Project-defined kinds](#project-defined-kinds) first.
 
 1. **Agent Story** — the work centres on an agentic system around a foundation model (FM): goal-directed behavior, tool use, skills, memory/context, planning, workflows, guardrails, human approval, orchestration, end-to-end agent evaluation.
 2. **Model Story** — the work centres on a learned model as the development object: feature processing, training, validation, model selection, fine-tuning, model performance, deployment/versioning of the model.
@@ -121,6 +121,18 @@ These are this skill's extension, not part of the papers' definitions. Add one o
 | --- | --- |
 | Data Story | quality constraints, labeling, sampling, privacy, freshness |
 | Model Story | metric, baseline, constraints, robustness, latency, deployment target |
+
+## Project-defined kinds
+
+A project can define its own kinds in the optional file `.agents/spec/story-types.yaml`. Check for it before classifying. Copy [STORY-TYPE-TEMPLATE.yaml](./STORY-TYPE-TEMPLATE.yaml) to write one.
+
+- **No file:** use the four built-in kinds exactly as described above. Nothing else changes.
+- **`custom_story_types`:** each key is a kind name with a `prefix`, a `when` note, required `fields`, and optional `optional_fields`.
+- **`default_story_types`:** when present, only the built-in kinds it lists are available. A requirement that would have taken an unlisted built-in falls through to the next branch, and ends as an Implementation Decision if nothing fits. When absent, all four built-ins stay available.
+- **Precedence:** test each requirement against the configured kinds' `when` notes before the built-in branches. If a configured kind fits, use it, even when a built-in would also fit. If several configured kinds fit, split into linked stories as in the tie-breakers.
+- **Entry format:** the same as built-ins. ID is `<prefix>-###`, counting up per prefix, with an explicit `**Type:**` set to the kind name, and one field per entry in `fields`, each written as `- <Field name>:`. Fields follow the core-field rule: an unsettled one is `Unresolved: <what is missing>`. Add an `optional_fields` entry only when the conversation already stated it.
+- **Never invent kinds.** Use only kinds that appear in the file or in the built-in set it leaves available. If work seems to need a kind the file does not define, keep it as an Implementation Decision, or leave a note suggesting the user add the kind. Do not write it into the file yourself.
+- **Bad config:** if a prefix duplicates a built-in or another custom prefix, or a kind lacks `prefix`, `when`, or `fields`, stop and tell the user. Do not guess a repair.
 
 ## Backward compatibility
 
