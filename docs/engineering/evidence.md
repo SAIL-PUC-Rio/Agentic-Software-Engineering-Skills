@@ -28,7 +28,7 @@ The unit `evidence` works in is the **claim** — a single assertion (an accepta
 
 ## Behavioral Specifications
 
-When the originating spec has `## Behavioral Specifications`, each in-scope scenario becomes its own claim citing its `BS-###` and story IDs, backed by the run of the test at the agreed seam. The pack also records the `bdd-scenarios` review of those scenarios as an evidence artifact, so it shows whether the specification met its quality gate as well as whether the code met the specification. A scenario with no verifying test shows as `NOT_RUN` or `NOT_APPLICABLE`, never `PASS`. `bdd-scenarios` is a beta skill; where it isn't installed, the review artifact is recorded as `NOT_RUN`. A spec without Behavioral Specifications gets the same pack as before.
+When the originating spec has `## Behavioral Specifications`, each in-scope scenario becomes its own claim, whatever its audience, citing its `BS-###` and story IDs, backed by the run of the test at the agreed seam. The pack also records the `bdd-scenarios` review of those scenarios as an evidence artifact, so it shows whether the specification met its quality gate as well as whether the code met the specification. A scenario with no verifying test shows as `NOT_RUN` or `NOT_APPLICABLE`, never `PASS`. `bdd-scenarios` is a beta skill; where it isn't installed, the review artifact is recorded as `NOT_RUN`. A spec without Behavioral Specifications gets the same pack as before.
 
 ## It's working if
 

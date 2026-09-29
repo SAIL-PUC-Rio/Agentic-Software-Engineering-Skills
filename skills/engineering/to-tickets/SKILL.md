@@ -109,7 +109,7 @@ Do NOT close or modify any parent issue.
 
 **Stories:** `US-001`, `MS-002` — IDs with their titles. Omit when the spec has no story IDs.
 
-**Behavior:** `BS-003`, `BS-004` — followed by each named scenario's Gherkin, copied verbatim from the spec, so the ticket is self-contained. Omit when the spec has no BS entries.
+**Behavior:** `BS-003`, `BS-004` — followed by each named scenario's Gherkin, copied verbatim from the spec, so the ticket is self-contained, and its `**Audience:**` line when the spec entry has one. Omit when the spec has no BS entries.
 
 - [ ] Acceptance criterion 1
 - [ ] Acceptance criterion 2
@@ -132,7 +132,7 @@ Story IDs with titles this ticket delivers. Omit when the spec has no story IDs.
 
 ## Behavior
 
-The BS IDs this ticket makes pass, each followed by its Gherkin copied verbatim from the spec, so the ticket is self-contained. Omit when the spec has no BS entries.
+The BS IDs this ticket makes pass, each followed by its Gherkin copied verbatim from the spec, so the ticket is self-contained, and by its `**Audience:**` line when the spec entry has one. Omit when the spec has no BS entries.
 
 ## Acceptance criteria
 
@@ -145,4 +145,4 @@ The BS IDs this ticket makes pass, each followed by its Gherkin copied verbatim 
 
 </issue-template>
 
-In either form, cited BS scenarios are copied, never reworded, and acceptance criteria add to them rather than restating them. Avoid specific file paths or code snippets — they go stale fast. Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it and note briefly that it came from a prototype. Trim to the decision-rich parts — not a working demo, just the important bits.
+In either form, cited BS scenarios are copied, never reworded (and keep the entry's audience), and acceptance criteria add to them rather than restating them. Avoid specific file paths or code snippets — they go stale fast. Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it and note briefly that it came from a prototype. Trim to the decision-rich parts — not a working demo, just the important bits.

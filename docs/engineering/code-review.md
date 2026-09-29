@@ -41,7 +41,7 @@ Step 1 depends on `docs/agents/issue-tracker.md`, which [setup-matt-pocock-skill
 | Reports | Documented breaches (can be hard), and smells (always judgement calls) | Missing or partial requirements, scope creep, requirements implemented wrongly |
 | Every finding cites | The standards file and the rule, or the named smell plus the hunk | The `BS-###` ID and scenario step when the spec has Behavioral Specifications, otherwise the line of the spec |
 
-When the spec or the ticket cites `BS-###` scenarios, the Spec sub-agent checks the diff against each one and quotes its ID on every finding that concerns it. Legacy `## User Stories` specs, specs with no stories, and specs with stories but no scenarios are judged against the quoted spec line as before.
+When the spec or the ticket cites `BS-###` scenarios, the Spec sub-agent checks the diff against each one and quotes its ID on every finding that concerns it. A developer-facing scenario is judged against the module's own interface, not UI or end-to-end behavior. Legacy `## User Stories` specs, specs with no stories, and specs with stories but no scenarios are judged against the quoted spec line as before.
 
 A generic review skill that does not know your standards is the thing this design is trying to avoid — it flags what is deliberate in your codebase and misses the invariants your codebase actually depends on. So the repo's own documentation is the [primary source](https://www.aihero.dev/ai-coding-dictionary/primary-source) on the Standards axis, and **the repo always overrides**.
 

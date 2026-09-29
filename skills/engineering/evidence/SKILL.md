@@ -24,7 +24,7 @@ Determine task mode, task reference, repository root, current branch, and base/c
 
 Pull claims from acceptance criteria, Definition of Done, the implementation plan, invariants, and the final implementation summary. Give each a stable ID (`CLM-001`, `CLM-002`, …). "Implementation completed" is never itself a claim's evidence.
 
-**When the originating spec has `## Behavioral Specifications`**, every in-scope `BS-###` also becomes a claim, one per scenario. Its Source records the BS ID and the story IDs on its **Stories:** line (e.g. `BS-002 (STORY-001, STORY-003)`), and its requirement is the scenario title. In scope means the ticket or spec slice names it. A spec with no such section, including a legacy `## User Stories` one, adds nothing here.
+**When the originating spec has `## Behavioral Specifications`**, every in-scope `BS-###` also becomes a claim, one per scenario, whatever its `**Audience:**`. Its Source records the BS ID and the story IDs on its **Stories:** line (e.g. `BS-002 (STORY-001, STORY-003)`), and its requirement is the scenario title. In scope means the ticket or spec slice names it. A spec with no such section, including a legacy `## User Stories` one, adds nothing here.
 
 ### 3. Build the scope-to-proof map
 
