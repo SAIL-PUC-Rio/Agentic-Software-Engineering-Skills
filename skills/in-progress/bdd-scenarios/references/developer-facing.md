@@ -6,7 +6,7 @@ For internal components whose behavior is observable at their own interface: a m
 
 - The boundary is the component's **interface**: what a caller supplies (inputs, configuration, collaborator responses) and what it returns, emits, or leaves in a collaborator.
 - Observable means visible there. Internal calls, private helpers, data structures, and ordering of internal steps are not.
-- The source must still state the behavior. A pure refactor with no behavior change has nothing to specify: say so and stop.
+- The source must still state the behavior. A pure refactor with no behavior change has no agreed behavior to specify; pin the existing behavior with [regression-mode.md](regression-mode.md) instead.
 - Guardrail: describe **behavior**, not how the component is built. "How it is built" is the Focused / Essential failure (Q10, Q11).
 
 ## Vocabulary

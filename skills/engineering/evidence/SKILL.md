@@ -24,13 +24,15 @@ Determine task mode, task reference, repository root, current branch, and base/c
 
 Pull claims from acceptance criteria, Definition of Done, the implementation plan, invariants, and the final implementation summary. Give each a stable ID (`CLM-001`, `CLM-002`, …). "Implementation completed" is never itself a claim's evidence.
 
-**When the originating spec has `## Behavioral Specifications`**, every in-scope `BS-###` also becomes a claim, one per scenario, whatever its `**Audience:**`. Its Source records the BS ID and the story IDs on its **Stories:** line (e.g. `BS-002 (STORY-001, STORY-003)`), and its requirement is the scenario title. In scope means the ticket or spec slice names it. A spec with no such section, including a legacy `## User Stories` one, adds nothing here.
+**When the originating spec has `## Behavioral Specifications`**, every in-scope `BS-###` also becomes a claim, one per scenario, whatever its `**Audience:**`. Its Source records the BS ID and the story IDs on its **Stories:** line (e.g. `BS-002 (STORY-001, STORY-003)`), and its requirement is the scenario title. In scope means the ticket or spec slice names it. 
+
+**When those include `**Kind:** regression` entries**, add one more claim: the existing test suite passes on the base revision and on the current one. A "suite passed" `PASS` needs both runs, the same command each time, each recorded as its own EVD; a missing base run makes it `NOT_RUN`. A spec with no such section, including a legacy `## User Stories` one, or with no regression entries, adds nothing here.
 
 ### 3. Build the scope-to-proof map
 
 For each claim, record its source, the implementation surface it maps to, how it's verified, the evidence IDs backing it, and a status. The full status vocabulary and its rules live in [claim-labels.md](./claim-labels.md) — use it as-is, never a status outside that table.
 
-A BS-derived claim's Verification is the test at the seam the spec's Testing Decisions assigns to that BS ID. Its status comes from that test's actual run: `PASS` or `FAIL` from the run, `NOT_RUN` if a verifying test exists but wasn't executed, `NOT_APPLICABLE` if no test verifies the scenario. A scenario with no verifying test is never `PASS`, and the claim carries no test EVD.
+A BS-derived claim's Verification is the test at the seam the spec's Testing Decisions assigns to that BS ID. Its status comes from that test's actual run: `PASS` or `FAIL` from the run, `NOT_RUN` if a verifying test exists but wasn't executed, `NOT_APPLICABLE` if no test verifies the scenario. A scenario with no verifying test is never `PASS`, and the claim carries no test EVD. This holds for each regression BS: its claim rests on a test that passes at its seam on the current revision, and the suite claim lists it.
 
 ### 4. Collect evidence — reuse before rerunning
 

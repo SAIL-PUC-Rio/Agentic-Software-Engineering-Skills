@@ -23,7 +23,7 @@ What was implemented, in one or two sentences. Whether the requested properties 
 | -------- | ------------------------ | ------ | ------------- | ------------ | ------ |
 | CLM-001  |                           |        |               |              |        |
 
-When the spec has Behavioral Specifications, add one row per in-scope `BS-###`: the scenario title as the requirement, `BS-### (STORY-###, ...)` as the source, and the seam-level test run as the verification. A BS with no verifying test is `NOT_RUN` or `NOT_APPLICABLE`.
+When the spec has Behavioral Specifications, add one row per in-scope `BS-###`: the scenario title as the requirement, `BS-### (STORY-###, ...)` as the source, and the seam-level test run as the verification. A BS with no verifying test is `NOT_RUN` or `NOT_APPLICABLE`. For `**Kind:** regression` entries, also add a row for the existing suite with both the base and current revision runs as its evidence IDs.
 
 ## 3. Change inventory
 

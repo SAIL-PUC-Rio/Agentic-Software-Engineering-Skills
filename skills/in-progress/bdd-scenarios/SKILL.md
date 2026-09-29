@@ -10,7 +10,7 @@ The executable-specification counterpart of `tdd`: `tdd` turns behavior into tes
 ## When it applies
 
 - A requirement, story, or spec already states observable behavior and the user wants it as `Feature`/`Scenario`.
-- Not for a pure refactor with **no** behavior change: nothing to specify. Say so and stop.
+- A pure refactor with **no** agreed behavior change has nothing new to specify, but the existing module's behavior can be pinned down as **regression** scenarios (below). Never invent behavior for it.
 - Not a requirements interview. If the source is silent, report it (step 6), do not ask-and-invent.
 
 Read `CONTEXT.md` (if it exists) so actors and entities use the project's glossary, and respect ADRs in the area.
@@ -21,6 +21,10 @@ Read `CONTEXT.md` (if it exists) so actors and entities use the project's glossa
 - **Developer-facing**: the behavior of an internal component (module, function, pipeline stage, model, agent) observable at **its own interface**. Written for developers, in the component's vocabulary (inputs, outputs, states, collaborators), still declarative. No fake end-user actor. The source must still state the behavior; never specify private structure.
 
 Infer the audience from the source (Data / Model / Agent stories are usually developer-facing). When developer-facing, load [references/developer-facing.md](references/developer-facing.md). The gate below is identical for both.
+
+## Regression mode
+
+For a refactor of an existing component, the source is its **observed** behavior: its code and existing tests, cited per scenario, not a decided requirement. Load [references/regression-mode.md](references/regression-mode.md). Developer-facing, same gate, same statuses. Whatever the code and tests do not settle goes under `### Unresolved behavior`; never write a guessed `Then`.
 
 ## Modes
 
@@ -42,4 +46,4 @@ Load [references/review-mode.md](references/review-mode.md). It parses the Gherk
 
 ## Examples
 
-[examples/good.feature](examples/good.feature) passes the gate. [examples/bad.feature](examples/bad.feature) violates several named attributes, each annotated. [examples/bad.review.md](examples/bad.review.md) and [examples/good.review.md](examples/good.review.md) record the review-mode output for each. The developer-facing pair is `examples/developer-good.feature`, `examples/developer-bad.feature` and their `.review.md` records. Read them to calibrate; do not copy their domain.
+[examples/good.feature](examples/good.feature) passes the gate. [examples/bad.feature](examples/bad.feature) violates several named attributes, each annotated. [examples/bad.review.md](examples/bad.review.md) and [examples/good.review.md](examples/good.review.md) record the review-mode output for each. The regression pair is `examples/regression-good.feature` and `regression-good.review.md`, with `examples/regression-evidence.md` showing the matching evidence claims. The developer-facing pair is `examples/developer-good.feature`, `examples/developer-bad.feature` and their `.review.md` records. Read them to calibrate; do not copy their domain.

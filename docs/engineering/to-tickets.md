@@ -32,7 +32,7 @@ Two things happen before anything is published. `to-tickets` looks for prefactor
 
 ## Story and behavior IDs
 
-When the spec has `## Stories` or `## Behavioral Specifications`, each ticket cites the story IDs it delivers and the `BS-###` scenarios it makes pass, with the Gherkin copied in verbatim, and its `**Audience:**` line when the spec has one, so the ticket stands alone. Those IDs are the trace that [implement](https://aihero.dev/skills-implement) and [code-review](https://aihero.dev/skills-code-review) pick up downstream. Nothing depends on how a story is worded. A legacy spec with `## User Stories`, or a spec with no stories at all, still splits into tickets; the tickets simply carry no trace lines rather than invented IDs.
+When the spec has `## Stories` or `## Behavioral Specifications`, each ticket cites the story IDs it delivers and the `BS-###` scenarios it makes pass, with the Gherkin copied in verbatim, and its `**Audience:**` and `**Kind:**` lines when the spec has them, so the ticket stands alone. Those IDs are the trace that [implement](https://aihero.dev/skills-implement) and [code-review](https://aihero.dev/skills-code-review) pick up downstream. Nothing depends on how a story is worded. A legacy spec with `## User Stories`, or a spec with no stories at all, still splits into tickets; the tickets simply carry no trace lines rather than invented IDs.
 
 ## Blocking edges
 

@@ -28,14 +28,14 @@ The unit `evidence` works in is the **claim** — a single assertion (an accepta
 
 ## Behavioral Specifications
 
-When the originating spec has `## Behavioral Specifications`, each in-scope scenario becomes its own claim, whatever its audience, citing its `BS-###` and story IDs, backed by the run of the test at the agreed seam. The pack also records the `bdd-scenarios` review of those scenarios as an evidence artifact, so it shows whether the specification met its quality gate as well as whether the code met the specification. A scenario with no verifying test shows as `NOT_RUN` or `NOT_APPLICABLE`, never `PASS`. `bdd-scenarios` is a beta skill; where it isn't installed, the review artifact is recorded as `NOT_RUN`. A spec without Behavioral Specifications gets the same pack as before.
+When the originating spec has `## Behavioral Specifications`, each in-scope scenario becomes its own claim, whatever its audience, citing its `BS-###` and story IDs, backed by the run of the test at the agreed seam. The pack also records the `bdd-scenarios` review of those scenarios as an evidence artifact, so it shows whether the specification met its quality gate as well as whether the code met the specification. A scenario with no verifying test shows as `NOT_RUN` or `NOT_APPLICABLE`, never `PASS`. `bdd-scenarios` is a beta skill; where it isn't installed, the review artifact is recorded as `NOT_RUN`. For regression scenarios the pack adds a claim that the existing suite passes on the base and the current revision, with both runs recorded, and that claim is not `PASS` unless both ran. A spec without Behavioral Specifications gets the same pack as before.
 
 ## It's working if
 
 - Every row in the scope-to-proof map cites a real evidence ID, not just a claim.
 - A `NOT_RUN` or `UNKNOWN` claim is still visible in the executive result, not smoothed over.
 - It reuses `implement`'s own command output where it can, rather than rerunning the whole suite a second time to manufacture evidence.
-- For a spec with Behavioral Specifications, every in-scope `BS-###` has its own claim row, and an untested one reads `NOT_RUN` or `NOT_APPLICABLE`.
+- For a spec with Behavioral Specifications, every in-scope `BS-###` has its own claim row, and an untested one reads `NOT_RUN` or `NOT_APPLICABLE`; a regression spec also shows a suite claim with both a base and a current run.
 - Regenerating the pack for the same commit updates the existing published copy instead of posting a duplicate.
 
 ## Where it fits

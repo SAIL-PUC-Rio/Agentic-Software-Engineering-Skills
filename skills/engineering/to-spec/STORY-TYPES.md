@@ -10,7 +10,7 @@ Classify each requirement or intent on its own, in this order. Take the first br
 2. **Model Story** — the work centres on a learned model as the development object: feature processing, training, validation, model selection, fine-tuning, model performance, deployment/versioning of the model.
 3. **Data Story** — the work is primarily acquiring, preparing, cleaning, transforming, storing, or managing data or context: datasets, retrieval corpora, knowledge sources, curated evaluation sets.
 4. **User Story** — the work is actor-visible: an actor interacting with the system, a user-visible capability, a business workflow, externally observable software behavior.
-5. **None of the above** — architecture, refactoring, module boundaries, tooling, migration. Do not force it into a story. Record it under Implementation Decisions.
+5. **None of the above** — architecture, refactoring, module boundaries, tooling, migration. Do not force it into a story. Record it under Implementation Decisions. A refactor of an existing module may also get `**Kind:** regression` Behavioral Specifications with no story (see `/to-spec`).
 
 A single feature can produce several kinds, and one requirement can yield linked stories of different kinds (a User Story for the visible behavior, a Data Story for the data it needs). Emit only the kinds the work actually uses. Never emit an empty Data, Model, or Agent Story to fill out the template.
 
