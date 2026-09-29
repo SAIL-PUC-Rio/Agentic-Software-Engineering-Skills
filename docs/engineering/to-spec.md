@@ -84,6 +84,43 @@ If your project needs a kind the four do not cover, define it once in `.agents/s
 
 For example, an `experiment` kind with prefix `ES` and fields hypothesis, intervention, evidence, and success condition turns "we think a shorter onboarding raises activation" into `ES-001`. Copy the [story-type template](https://github.com/mattpocock/skills/blob/main/skills/engineering/to-spec/STORY-TYPE-TEMPLATE.yaml) to start a file of your own.
 
+## Story, behavior, seam
+
+Three layers stay separate, and each answers a different question:
+
+| Layer | Section | Answers |
+| --- | --- | --- |
+| Story | `## Stories` | What work was agreed, and for whom |
+| Behavior | `## Behavioral Specifications` | What can be observed from outside when it works |
+| Seam | `## Testing Decisions` | Where that behavior is verified |
+
+Behavior is written as Gherkin, one `BS-###` entry each, with a **Stories:** line naming the story IDs it specifies. One story can have several entries, one entry can span several stories (a User Story and a Model Story, say), and a story with no agreed observable behavior has none. The Gherkin is built with the [bdd-scenarios](https://github.com/mattpocock/skills/tree/main/skills/in-progress/bdd-scenarios) skill, a beta skill that ships outside the plugin, and only scenarios that pass its quality gate are emitted.
+
+Behavior nobody decided is not filled in. A branch or outcome the conversation never settled goes under an `Unresolved behavior` note in that entry, with no `Then` invented for it. If no observable behavior was agreed at all, as in a refactor or data-only work, the section is left out. If `bdd-scenarios` is not installed, the section is left out too and Further Notes says so.
+
+A behavior entry never picks its own seam. Testing Decisions names the agreed seam that verifies each one by ID:
+
+````markdown
+## Behavioral Specifications
+
+### BS-001 — Detect a smartphone
+
+**Stories:** US-001, MS-001
+
+```gherkin
+Feature: Smartphone detection
+
+  Scenario: Flag an image containing a smartphone
+    Given an image eligible for smartphone detection
+    When the image contains a smartphone
+    Then the system reports a smartphone detection
+```
+
+## Testing Decisions
+
+- Verify BS-001 through the public detection endpoint, not the model internals.
+````
+
 ## Seams before prose
 
 Before it writes a word, `to-spec` sketches the **seams** the feature will be tested at, and checks them with you. It prefers seams that already exist to new ones, and takes the highest seam it can — the ideal number across a change is one.
@@ -111,7 +148,7 @@ Mostly for the agent, and it reads that way — complete, dense, reference-heavy
 Nothing keeps it in sync, so in practice it is a snapshot of what you knew at that moment, and it goes stale the first time implementation teaches you something. Treat it as throwaway once the work ships. The artifacts meant to outlive it are your `CONTEXT.md` and your ADRs — if something learned during implementation deserves to last, it belongs there, not in an edited spec.
 
 **My work is a refactor or a module boundary, not a feature. Does the template fit?**
-Better than it used to. Stories are optional now, so a refactor can have few or none, and the spec rests on its implementation decisions and testing decisions. Let the durable architectural calls land as ADRs via [grill-with-docs](https://aihero.dev/skills-grill-with-docs) rather than trying to make the spec carry them.
+Better than it used to. Stories are optional now, so a refactor can have few or none, and with no agreed observable behavior it gets no Behavioral Specifications either. The spec rests on its implementation decisions and testing decisions. Let the durable architectural calls land as ADRs via [grill-with-docs](https://aihero.dev/skills-grill-with-docs) rather than trying to make the spec carry them.
 
 **Will it check the tracker for related work, or cite the ADRs it's respecting?**
 No to both. It reads and respects the ADRs covering the area it touches, but it doesn't link them, and it doesn't search the tracker for overlapping issues before drafting — so a spec can quietly duplicate work someone already filed. Search the tracker yourself first if the area is busy.
@@ -126,6 +163,8 @@ Very large specs can outgrow what a tracker issue will serve back cleanly, and t
 - It comes back in your project's nouns, not generic product-management boilerplate.
 - Every decision in it is one you can remember making. Nothing was invented to fill a section.
 - Stories carry a type and an ID, only for kinds your work uses, and a gap in your decisions shows as "Unresolved" rather than a made-up number.
+- Behavior you agreed shows up as `BS-###` Gherkin tied to story IDs, and behavior you left open shows up as unresolved, never as a guessed outcome.
+- Each `BS-###` is named in Testing Decisions with the seam that verifies it.
 - The out-of-scope section has real things in it — the things you refused are usually the most useful lines on the page.
 
 ## Where it fits

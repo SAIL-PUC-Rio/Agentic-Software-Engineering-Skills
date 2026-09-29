@@ -46,6 +46,39 @@ As a mobile bank customer, I want to see balance on my accounts, so that I can m
 
 A spec that still has `## User Stories` reads as all `kind: user`; never rewrite historical specs.
 
+## Behavioral Specifications
+
+Gherkin for observable behavior the conversation already agreed, traced to the stories it specifies. `bdd-scenarios` is a beta skill: call the Skill tool with "bdd-scenarios" to construct the Gherkin and run its quality gate. Do not restate its rules here. If the skill is not available, leave this section out and add a line to Further Notes saying agreed behavior was not written as scenarios.
+
+Each entry is `BS-###` (counting up per spec, never renumbered after publishing) with a **Stories:** line listing the story IDs it specifies, then one fenced `gherkin` block:
+
+- One story can have many BS entries.
+- One BS entry can span several stories, of different kinds.
+- A story can have no BS entry when no observable behavior was agreed for it.
+- Emit a scenario only if it passed the gate. Where a branch or outcome was never decided, list it under `### Unresolved behavior` inside that BS entry, say what is missing, and write no `Then` for it. Never guess to complete a scenario.
+- Leave the whole section out when no observable behavior was agreed, as with a refactor or data-only work. Never write scenarios to fill it.
+
+This section decides nothing. It restates agreed behavior; it does not choose where the behavior is verified (that is Testing Decisions), and it does not interview the user.
+
+<bs-example>
+### BS-001 — Detect a smartphone
+
+**Stories:** US-001, MS-001
+
+```gherkin
+Feature: Smartphone detection
+
+  Scenario: Flag an image containing a smartphone
+    Given an image eligible for smartphone detection
+    When the image contains a smartphone
+    Then the system reports a smartphone detection
+```
+
+### Unresolved behavior
+
+- The result for an image that is not eligible for detection was not decided.
+</bs-example>
+
 ## Implementation Decisions
 
 A list of implementation decisions that were made. This can include:
@@ -68,6 +101,7 @@ A list of testing decisions that were made. Include:
 
 - A description of what makes a good test (only test external behavior, not implementation details)
 - Which modules will be tested
+- For each BS entry, the agreed seam that verifies it, by ID (e.g. "Verify BS-004 through the public dataset-import boundary"). Behavioral Specifications never replace seam selection, and a BS entry is not a test
 - Prior art for the tests (i.e. similar types of tests in the codebase)
 
 ## Out of Scope
