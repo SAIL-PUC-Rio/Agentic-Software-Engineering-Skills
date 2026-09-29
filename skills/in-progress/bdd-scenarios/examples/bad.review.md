@@ -4,6 +4,8 @@ Result of walking [bad.feature](bad.feature) through [review mode](../references
 
 ## BDD Review
 
+**Audience judged:** customer-facing (business vocabulary, `customer` actor, UI and transport steps)
+
 ### Findings
 
 - **Essential - REVISE (Q4, Q10):** `Given the user is on the login page` is removable; `And the frontend sends POST /api/v1/orders` is a removable detail.

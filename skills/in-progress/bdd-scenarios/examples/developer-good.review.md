@@ -4,6 +4,8 @@ Walking [developer-good.feature](developer-good.feature) through [review mode](.
 
 ## BDD Review
 
+**Audience judged:** developer-facing (component vocabulary, no end-user actor, parent comment)
+
 ### Findings
 
 All eight attributes PASS (Essential, Focused, Singular, Clear, Complete, Unique, Ubiquitous, Integrous). No REVISE findings.

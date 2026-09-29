@@ -4,6 +4,8 @@ Result of walking [developer-bad.feature](developer-bad.feature) through [review
 
 ## BDD Review
 
+**Audience judged:** developer-facing (component vocabulary (stage, record, SKU, batch), parent comment BS-004/DS-004; the stray `user` is a misnamed actor, not a customer-facing signal)
+
 ### Findings
 
 - **Essential - REVISE (Q4, Q10):** `the user opens the catalog page` is removable; the `HashMap<String, Record>` construction detail is removable.

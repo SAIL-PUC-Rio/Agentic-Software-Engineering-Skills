@@ -4,6 +4,8 @@ Walking [good.feature](good.feature) through [review mode](../references/review-
 
 ## BDD Review
 
+**Audience judged:** customer-facing (business vocabulary, `customer` actor)
+
 ### Findings
 
 All eight attributes PASS (Essential, Focused, Singular, Clear, Complete, Unique, Ubiquitous, Integrous). No REVISE findings.
