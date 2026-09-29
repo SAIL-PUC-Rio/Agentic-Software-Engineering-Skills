@@ -60,7 +60,7 @@ Actor, capability, value.
 As a <actor>, I want <capability>, so that <value>.
 ```
 
-The list of User Stories should be extensive and cover the user-facing behavior discussed.
+The list of User Stories should be extensive and cover the user-facing behavior discussed. Data, Model and Agent stories cover their own agreed work; behavior agreed for them is usually developer-facing (see [Audience](#audience-of-behavioral-specifications)).
 
 ### Data Story (Agile4MLS)
 
@@ -127,12 +127,25 @@ These are this skill's extension, not part of the papers' definitions. Add one o
 A project can define its own kinds in the optional file `.agents/spec/story-types.yaml`. Check for it before classifying. Copy [STORY-TYPE-TEMPLATE.yaml](./STORY-TYPE-TEMPLATE.yaml) to write one.
 
 - **No file:** use the four built-in kinds exactly as described above. Nothing else changes.
-- **`custom_story_types`:** each key is a kind name with a `prefix`, a `when` note, required `fields`, and optional `optional_fields`.
+- **`custom_story_types`:** each key is a kind name with a `prefix`, a `when` note, required `fields`, optional `optional_fields`, and an optional `audience`.
 - **`default_story_types`:** when present, only the built-in kinds it lists are available. A requirement that would have taken an unlisted built-in falls through to the next branch, and ends as an Implementation Decision if nothing fits. When absent, all four built-ins stay available.
 - **Precedence:** test each requirement against the configured kinds' `when` notes before the built-in branches. If a configured kind fits, use it, even when a built-in would also fit. If several configured kinds fit, split into linked stories as in the tie-breakers.
+- **`audience`:** `customer` or `developer`, the default audience of Behavioral Specifications for that kind. Omitted means customer-facing. It is a default only: the behavior the conversation actually agreed decides, and an invalid value is bad config.
 - **Entry format:** the same as built-ins. ID is `<prefix>-###`, counting up per prefix, with an explicit `**Type:**` set to the kind name, and one field per entry in `fields`, each written as `- <Field name>:`. Fields follow the core-field rule: an unsettled one is `Unresolved: <what is missing>`. Add an `optional_fields` entry only when the conversation already stated it.
 - **Never invent kinds.** Use only kinds that appear in the file or in the built-in set it leaves available. If work seems to need a kind the file does not define, keep it as an Implementation Decision, or leave a note suggesting the user add the kind. Do not write it into the file yourself.
-- **Bad config:** if a prefix duplicates a built-in or another custom prefix, or a kind lacks `prefix`, `when`, or `fields`, stop and tell the user. Do not guess a repair.
+- **Bad config:** if a prefix duplicates a built-in or another custom prefix, or a kind lacks `prefix`, `when`, or `fields`, or `audience` is not `customer` or `developer`, stop and tell the user. Do not guess a repair.
+
+## Audience of Behavioral Specifications
+
+Story kinds also hint at who observes the agreed behavior, which decides the `**Audience:**` of the BS entry that specifies it (`bdd-scenarios` owns the rules for writing each).
+
+| Kind | Default audience |
+| --- | --- |
+| User Story | customer-facing |
+| Data, Model, Agent Story | developer-facing when the agreed behavior is at the component's own interface; customer-facing when an end user observes it |
+| Project-defined kind | its `audience`, else customer-facing |
+
+A story whose behavior nobody agreed gets no BS entry. Never infer behavior from the kind.
 
 ## Backward compatibility
 

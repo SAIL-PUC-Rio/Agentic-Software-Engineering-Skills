@@ -91,12 +91,12 @@ Three layers stay separate, and each answers a different question:
 | Layer | Section | Answers |
 | --- | --- | --- |
 | Story | `## Stories` | What work was agreed, and for whom |
-| Behavior | `## Behavioral Specifications` | What can be observed from outside when it works |
+| Behavior | `## Behavioral Specifications` | What can be observed when it works, by a customer or by a developer at a component's interface |
 | Seam | `## Testing Decisions` | Where that behavior is verified |
 
-Behavior is written as Gherkin, one `BS-###` entry each, with a **Stories:** line naming the story IDs it specifies. One story can have several entries, one entry can span several stories (a User Story and a Model Story, say), and a story with no agreed observable behavior has none. The Gherkin is built with the [bdd-scenarios](https://github.com/mattpocock/skills/tree/main/skills/in-progress/bdd-scenarios) skill, a beta skill that ships outside the plugin, and only scenarios that pass its quality gate are emitted.
+Behavior is written as Gherkin, one `BS-###` entry each, with a **Stories:** line naming the story IDs it specifies and an optional **Audience:** line. An entry with no audience line is customer-facing, so older specs read unchanged. `**Audience:** developer-facing` marks behavior observed at an internal component's interface, typical of Data, Model and Agent stories, and it is written with no invented end-user actor. A project-defined kind can declare a default audience in `story-types.yaml`. One story can have several entries, one entry can span several stories (a User Story and a Model Story, say), and a story with no agreed behavior has none. The Gherkin is built with the [bdd-scenarios](https://github.com/mattpocock/skills/tree/main/skills/in-progress/bdd-scenarios) skill, a beta skill that ships outside the plugin, and only scenarios that pass its quality gate are emitted.
 
-Behavior nobody decided is not filled in. A branch or outcome the conversation never settled goes under an `Unresolved behavior` note in that entry, with no `Then` invented for it. If no observable behavior was agreed at all, as in a refactor or data-only work, the section is left out. If `bdd-scenarios` is not installed, the section is left out too and Further Notes says so.
+Behavior nobody decided is not filled in. A branch or outcome the conversation never settled goes under an `Unresolved behavior` note in that entry, with no `Then` invented for it. If no behavior of either audience was agreed, as in a refactor that changes nothing or data work whose behavior nobody settled, the section is left out. If `bdd-scenarios` is not installed, the section is left out too and Further Notes says so.
 
 A behavior entry never picks its own seam. Testing Decisions names the agreed seam that verifies each one by ID:
 
@@ -116,9 +116,26 @@ Feature: Smartphone detection
     Then the system reports a smartphone detection
 ```
 
+### BS-002 — Skip images ineligible for detection
+
+**Stories:** MS-001, DS-001
+
+**Audience:** developer-facing
+
+```gherkin
+# Parent: BS-001 (the system reports smartphone detections)
+Feature: Detection input filtering
+
+  Scenario: Exclude an image below the minimum resolution
+    Given an image below the minimum resolution
+    When the detector receives the image
+    Then the detector returns no detection result for it
+```
+
 ## Testing Decisions
 
 - Verify BS-001 through the public detection endpoint, not the model internals.
+- Verify BS-002 at the detector's own interface.
 ````
 
 ## Seams before prose
@@ -148,7 +165,7 @@ Mostly for the agent, and it reads that way — complete, dense, reference-heavy
 Nothing keeps it in sync, so in practice it is a snapshot of what you knew at that moment, and it goes stale the first time implementation teaches you something. Treat it as throwaway once the work ships. The artifacts meant to outlive it are your `CONTEXT.md` and your ADRs — if something learned during implementation deserves to last, it belongs there, not in an edited spec.
 
 **My work is a refactor or a module boundary, not a feature. Does the template fit?**
-Better than it used to. Stories are optional now, so a refactor can have few or none, and with no agreed observable behavior it gets no Behavioral Specifications either. The spec rests on its implementation decisions and testing decisions. Let the durable architectural calls land as ADRs via [grill-with-docs](https://aihero.dev/skills-grill-with-docs) rather than trying to make the spec carry them.
+Better than it used to. Stories are optional now, so a refactor can have few or none, and with no behavior change it gets no Behavioral Specifications either. The spec rests on its implementation decisions and testing decisions. Let the durable architectural calls land as ADRs via [grill-with-docs](https://aihero.dev/skills-grill-with-docs) rather than trying to make the spec carry them.
 
 **Will it check the tracker for related work, or cite the ADRs it's respecting?**
 No to both. It reads and respects the ADRs covering the area it touches, but it doesn't link them, and it doesn't search the tracker for overlapping issues before drafting — so a spec can quietly duplicate work someone already filed. Search the tracker yourself first if the area is busy.
@@ -163,7 +180,7 @@ Very large specs can outgrow what a tracker issue will serve back cleanly, and t
 - It comes back in your project's nouns, not generic product-management boilerplate.
 - Every decision in it is one you can remember making. Nothing was invented to fill a section.
 - Stories carry a type and an ID, only for kinds your work uses, and a gap in your decisions shows as "Unresolved" rather than a made-up number.
-- Behavior you agreed shows up as `BS-###` Gherkin tied to story IDs, and behavior you left open shows up as unresolved, never as a guessed outcome.
+- Behavior you agreed shows up as `BS-###` Gherkin tied to story IDs, with developer-facing entries marked as such, and behavior you left open shows up as unresolved, never as a guessed outcome.
 - Each `BS-###` is named in Testing Decisions with the seam that verifies it.
 - The out-of-scope section has real things in it — the things you refused are usually the most useful lines on the page.
 
