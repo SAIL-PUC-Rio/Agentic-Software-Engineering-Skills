@@ -39,4 +39,4 @@ Nothing here stops you from wanting that, but sequential and parallel are differ
 
 ## Where it fits
 
-A **chain step** that sits downstream of [to-tickets](to-tickets.md) or a `wayfinder` map, and stands in for hand-driving [implement](implement.md) per ticket. Its sibling is [implement-parallel](implement-parallel.md), for the case where subissues don't depend on each other; its downstream neighbour is [evidence](evidence.md), which it drives itself after every subissue. [ask-matt](ask-matt.md) is the router over the whole set.
+A **chain step** that sits downstream of [to-tickets](to-tickets.md) or a `wayfinder` map, and stands in for hand-driving [implement](implement.md) per ticket. Its sibling is [implement-parallel](implement-parallel.md), for the case where subissues don't depend on each other; its downstream neighbour is [evidence](evidence.md), which it drives itself after every subissue. [ask-sail](../../skills/engineering/ask-sail/SKILL.md) is the router over the whole set.
