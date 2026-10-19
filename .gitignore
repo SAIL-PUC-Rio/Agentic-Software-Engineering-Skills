@@ -1,1 +1,3 @@
 node_modules
+# Source books for the patterns catalog are not redistributed
+references/**/*.pdf

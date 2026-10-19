@@ -13,14 +13,14 @@ You invoke this by typing `/to-tickets` — the agent won't reach for it on its 
 | You have a spec issue and the build spans several sessions | `/to-tickets`, or `/to-tickets #<spec_issue>` |
 | The plan is only in the conversation, never written up | `/to-tickets` reads the thread directly — no spec needed |
 | The whole change fits in one context window | [implement](implement.md) — skip the tickets |
-| Nothing is decided yet | [grill-with-docs](grill-with-docs.md), then [to-spec](to-spec.md) |
-| A [wayfinder](wayfinder.md) map has cleared | [to-spec](to-spec.md) first, to collapse the map, then `/to-tickets` |
+| Nothing is decided yet | [grill-with-docs](../../skills/engineering/grill-with-docs/SKILL.md), then [to-spec](to-spec.md) |
+| A [wayfinder](../../skills/engineering/wayfinder/SKILL.md) map has cleared | [to-spec](to-spec.md) first, to collapse the map, then `/to-tickets` |
 
-Tickets that `to-tickets` produced are agent-ready by construction. Don't run [triage](triage.md) over them — triage is for work that arrived from someone else.
+Tickets that `to-tickets` produced are agent-ready by construction. Don't run [triage](../../skills/engineering/triage/SKILL.md) over them — triage is for work that arrived from someone else.
 
 ## Prerequisites
 
-`to-tickets` publishes into a tracker, so [setup-matt-pocock-skills](setup-matt-pocock-skills.md) must have configured one for this repo, along with the triage-label vocabulary. Either kind works: a real tracker like GitHub or Linear, or local markdown files under `.scratch/`, which is supported out of the box.
+`to-tickets` publishes into a tracker, so [setup-sail-skills](../../skills/engineering/setup-sail-skills/SKILL.md) must have configured one for this repo, along with the triage-label vocabulary. Either kind works: a real tracker like GitHub or Linear, or local markdown files under `.scratch/`, which is supported out of the box.
 
 ## Tracer bullets, not layers
 
@@ -74,10 +74,10 @@ Over-decomposition is the most reported friction on this skill, and it is consis
 This is the failure the vertical-slice rule is written against, and the skill still produces it sometimes. Catch it at the quiz step by asking one question per ticket: what can I demo when this is done? A ticket with no answer is a horizontal slice. Some people add a "demo path" line to each ticket for this reason, and report it nudges the model toward vertical decomposition.
 
 **On GitHub the tickets weren't created as sub-issues of the spec issue.**
-Known and unfixed. It has been reported across a dozen runs and several models, [most fully in issue #554](https://github.com/mattpocock/skills/issues/554), and it is worse on Codex than on Claude. `gh` has supported this natively since v2.94: `gh issue create --parent <n>`, and `gh issue edit <parent> --add-sub-issue <n>` after the fact. Until the tracker template prefers those, wiring the parent links yourself after a run is the reliable move.
+Known and unfixed. It has been reported across a dozen runs and several models, [most fully in issue #554](https://github.com/Esduard/skills/issues/554), and it is worse on Codex than on Claude. `gh` has supported this natively since v2.94: `gh issue create --parent <n>`, and `gh issue edit <parent> --add-sub-issue <n>` after the fact. Until the tracker template prefers those, wiring the parent links yourself after a run is the reliable move.
 
 **"Blocked by" was written into the issue body instead of a real blocking link.**
-Same class of problem, [reported in issue #513](https://github.com/mattpocock/skills/issues/513), where the agent went as far as asserting GitHub has no native blocking relationship at all. It does — `gh issue create --blocked-by 12,15`. Because blockers are published first, their numbers are always available at creation time. The body text is meant to be the fallback for trackers with no native edge, not the default.
+Same class of problem, [reported in issue #513](https://github.com/Esduard/skills/issues/513), where the agent went as far as asserting GitHub has no native blocking relationship at all. It does — `gh issue create --blocked-by 12,15`. Because blockers are published first, their numbers are always available at creation time. The body text is meant to be the fallback for trackers with no native edge, not the default.
 
 **Where do the local tickets go? The v1.1 notes said a root-level `tickets.md`.**
 They did, and that was a bug — a single shared file also raced when parallel agents wrote to it. Local mode now writes one file per ticket under `.scratch/<feature-slug>/issues/<NN>-<slug>.md`, in dependency order, matching the layout the local tracker template already described. The `NN` prefix is a real ticket ID, so `/implement 03` works instead of retyping a long title.
@@ -108,4 +108,4 @@ The skill stops at the artifact, and there is no auto-dispatch mode. Dispatch is
 grill-with-docs → to-spec → to-tickets → implement → code-review
 ```
 
-Upstream is [to-spec](to-spec.md), which hands it a settled spec to slice against — keep both in one unbroken context window. Downstream is [implement](implement.md), which builds one ticket per fresh session, driving [tdd](tdd.md) for the tests and closing with [code-review](code-review.md). When you're unsure which skill or flow fits, [ask-matt](ask-matt.md) routes you.
+Upstream is [to-spec](to-spec.md), which hands it a settled spec to slice against — keep both in one unbroken context window. Downstream is [implement](implement.md), which builds one ticket per fresh session, driving [tdd](../../skills/engineering/tdd/SKILL.md) for the tests and closing with [code-review](code-review.md). When you're unsure which skill or flow fits, [ask-sail](../../skills/engineering/ask-sail/SKILL.md) routes you.

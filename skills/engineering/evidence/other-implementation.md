@@ -1,6 +1,6 @@
 # Publishing: Other (freeform) trackers
 
-`docs/agents/issue-tracker.md` carries a freeform description of how this repo's tracker works, written by the user during `/setup-matt-pocock-skills`. There is no fixed CLI shape to follow — read that description and use whatever posting mechanism it names (an API call, a different CLI, a manual step).
+`docs/agents/issue-tracker.md` carries a freeform description of how this repo's tracker works, written by the user during `/setup-sail-skills`. There is no fixed CLI shape to follow — read that description and use whatever posting mechanism it names (an API call, a different CLI, a manual step).
 
 ## Resolving the task reference
 
