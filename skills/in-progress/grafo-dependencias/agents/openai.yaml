@@ -1,0 +1,3 @@
+interface:
+  display_name: "Grafo de Dependências"
+  short_description: "Map a code flow's dependencies as a Mermaid/SVG graph"

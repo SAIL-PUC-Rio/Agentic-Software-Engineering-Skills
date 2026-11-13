@@ -102,6 +102,7 @@ Skills split on one axis: who can invoke them. **User-invoked** skills run only 
 Public on purpose, not shipped in the plugin. See [`skills/in-progress/`](./skills/in-progress/README.md).
 
 - **[bdd-scenarios](./skills/in-progress/bdd-scenarios/SKILL.md)** — Gherkin Feature files from agreed behavior, customer-facing or developer-facing, revised through the Oliveira et al. (2019) quality gate. `to-spec`, `implement`, `tdd` and `evidence` already use it.
+- **[grafo-dependencias](./skills/in-progress/grafo-dependencias/SKILL.md)** — Dependency graph of a code flow (Mermaid + SVG + component table), edges labeled with the real methods called, no hidden connections. In Portuguese.
 - **[perspec-me](./skills/in-progress/perspec-me/SKILL.md)** — Resolve one project question through a PerSpecML concern-guided interview, persisting the answer per Concern.
 - **[show-me](./skills/in-progress/show-me/SKILL.md)** — Explain the current topic visually with the smallest view that fits. Vendored from [humanlayer/skills](https://github.com/humanlayer/skills).
 
