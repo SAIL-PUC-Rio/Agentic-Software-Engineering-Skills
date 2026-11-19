@@ -44,4 +44,4 @@ The next wave doesn't open. Fixing the suite blocks progress on purpose — a wa
 
 ## Where it fits
 
-A **chain step**, sibling to [implement-sequential](https://aihero.dev/skills-implement-sequential), sitting downstream of [to-tickets](https://aihero.dev/skills-to-tickets) or a `wayfinder` map. It leans on [resolving-merge-conflicts](https://aihero.dev/skills-resolving-merge-conflicts) for the merges and drives [evidence](https://aihero.dev/skills-evidence) itself per subissue. [ask-matt](https://aihero.dev/skills-ask-matt) is the router over the whole set.
+A **chain step**, sibling to [implement-sequential](https://aihero.dev/skills-implement-sequential), sitting downstream of [to-tickets](https://aihero.dev/skills-to-tickets) or a `wayfinder` map. It leans on [resolving-merge-conflicts](https://aihero.dev/skills-resolving-merge-conflicts) for the merges and drives [evidence](https://aihero.dev/skills-evidence) itself per subissue. [ask-sail](https://aihero.dev/skills-ask-matt) is the router over the whole set.

@@ -151,7 +151,7 @@ Use a controlled status vocabulary:
 
 Never silently convert `NOT_RUN` or `UNKNOWN` into `PASS`.
 
-They should be stored inside the skill folder as templates for status of evidence. much like skills/engineering/setup-matt-pocock-skills/triage-labels.md inside the setup skills
+They should be stored inside the skill folder as templates for status of evidence. much like skills/engineering/setup-sail-skills/triage-labels.md inside the setup skills
 
 ### 4. Collect factual evidence
 

@@ -5,7 +5,7 @@ description: Produce a factual, auditable evidence pack for completed work and p
 
 Trust is earned through verifiable evidence, not a confident narrative. `evidence` connects claims about completed work to reproducible proof — it does not repeat the implementation summary.
 
-The issue tracker should have been provided to you — run `/setup-matt-pocock-skills` if `docs/agents/issue-tracker.md` is missing. Without it, `evidence` cannot know where to publish and falls back to the ambiguous-mode path below.
+The issue tracker should have been provided to you — run `/setup-sail-skills` if `docs/agents/issue-tracker.md` is missing. Without it, `evidence` cannot know where to publish and falls back to the ambiguous-mode path below.
 
 ## Process
 
@@ -14,11 +14,11 @@ The issue tracker should have been provided to you — run `/setup-matt-pocock-s
 Determine task mode, task reference, repository root, current branch, and base/current commit, in this order of precedence:
 
 1. Explicit context passed by `implement` in the current conversation (spec, tickets, issue reference already discussed).
-2. Canonical state in `docs/agents/issue-tracker.md` — this is the **Issue tracker** `setup-matt-pocock-skills` configured. Read it; don't guess which tracker is in play.
+2. Canonical state in `docs/agents/issue-tracker.md` — this is the **Issue tracker** `setup-sail-skills` configured. Read it; don't guess which tracker is in play.
 3. Existing active-work-item metadata in the repo, resolved the way the configured tracker resolves it — see [github-implementation.md](./github-implementation.md), [gitlab-implementation.md](./gitlab-implementation.md), [local-implementation.md](./local-implementation.md), or [other-implementation.md](./other-implementation.md).
 4. Conservative repository inspection, as a last resort.
 
-**If the mode is still ambiguous** once you've exhausted the above: do not publish externally. Write the pack to `.scratch/_evidence/<UTC-timestamp>-<slug>.md` instead, and mark publication as blocked in the pack's executive result, naming exactly what metadata was missing (usually: `/setup-matt-pocock-skills` was never run).
+**If the mode is still ambiguous** once you've exhausted the above: do not publish externally. Write the pack to `.scratch/_evidence/<UTC-timestamp>-<slug>.md` instead, and mark publication as blocked in the pack's executive result, naming exactly what metadata was missing (usually: `/setup-sail-skills` was never run).
 
 ### 2. Identify the claims
 

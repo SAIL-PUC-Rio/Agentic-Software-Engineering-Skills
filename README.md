@@ -31,7 +31,7 @@ Most work travels one route. Each step is a skill you type.
 | 5. Prove it | [`/evidence`](./skills/engineering/evidence/SKILL.md) | A scope-to-proof map published to the issue: claims, verification commands, negative evidence. Runs automatically when `implement` finishes |
 | 6. Review | [`/code-review`](./skills/engineering/code-review/SKILL.md) | Two parallel reviews, Standards and Spec, so neither pollutes the other |
 
-Not sure where you are? [`/ask-matt`](./skills/engineering/ask-matt/SKILL.md) is the router. It names the skill and stops.
+Not sure where you are? [`/ask-sail`](./skills/engineering/ask-sail/SKILL.md) is the router. It names the skill and stops.
 
 Two on-ramps feed the flow: [`/triage`](./skills/engineering/triage/SKILL.md) for issues that arrived from other people, and [`/wayfinder`](./skills/engineering/wayfinder/SKILL.md) for efforts too foggy and too large to hold in one session.
 
@@ -57,11 +57,11 @@ On Claude Code older than 2.1.275, add the marketplace first: `/plugin marketpla
 npx skills@latest add SAIL-PUC-Rio/Agentic-Software-Engineering-Skills
 ```
 
-Pick the skills you want, and which coding agents to install them on. **Make sure `setup-matt-pocock-skills` is one of them.**
+Pick the skills you want, and which coding agents to install them on. **Make sure `setup-sail-skills` is one of them.**
 
 </details>
 
-Then, once per repo, run [`/setup-matt-pocock-skills`](./skills/engineering/setup-matt-pocock-skills/SKILL.md). It asks which issue tracker you use (GitHub, Linear, or local files), which labels you triage with, and where domain docs live.
+Then, once per repo, run [`/setup-sail-skills`](./skills/engineering/setup-sail-skills/SKILL.md). It asks which issue tracker you use (GitHub, Linear, or local files), which labels you triage with, and where domain docs live.
 
 ## Reference
 
@@ -71,8 +71,8 @@ Skills split on one axis: who can invoke them. **User-invoked** skills run only 
 
 **User-invoked**
 
-- **[ask-matt](./skills/engineering/ask-matt/SKILL.md)** — Ask which skill or flow fits your situation. A router over the user-invoked skills in this repo.
-- **[setup-matt-pocock-skills](./skills/engineering/setup-matt-pocock-skills/SKILL.md)** — Configure a repo for the engineering skills: issue tracker, triage labels, domain doc layout. Run once per repo.
+- **[ask-sail](./skills/engineering/ask-sail/SKILL.md)** — Ask which skill or flow fits your situation. A router over the user-invoked skills in this repo.
+- **[setup-sail-skills](./skills/engineering/setup-sail-skills/SKILL.md)** — Configure a repo for the engineering skills: issue tracker, triage labels, domain doc layout. Run once per repo.
 - **[grill-with-docs](./skills/engineering/grill-with-docs/SKILL.md)** — A relentless interview to sharpen a plan or design, which also builds the project's domain model: `CONTEXT.md` and ADRs, updated inline.
 - **[to-spec](./skills/engineering/to-spec/SKILL.md)** — Turn the current conversation into a spec and publish it to the issue tracker. No interview, just synthesis.
 - **[to-tickets](./skills/engineering/to-tickets/SKILL.md)** — Break a spec or conversation into tracer-bullet tickets with blocking edges and a rendered dependency graph. Text files locally, native blocking links on a real tracker.

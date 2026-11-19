@@ -28,7 +28,7 @@ The plugin is Claude Code only. Everywhere else, [skills.sh](https://skills.sh) 
 npx skills@latest add SAIL-PUC-Rio/Agentic-Software-Engineering-Skills
 ```
 
-Pick the skills you want, and which coding agents to install them on. **Make sure `setup-matt-pocock-skills` is one of them.**
+Pick the skills you want, and which coding agents to install them on. **Make sure `setup-sail-skills` is one of them.**
 
 </canonical-block>
 

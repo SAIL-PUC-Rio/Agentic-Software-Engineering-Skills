@@ -20,7 +20,7 @@ Type `/evidence`, or the agent reaches for it automatically when a task fits —
 
 ## Prerequisites
 
-The issue tracker `evidence` publishes to comes from [setup-matt-pocock-skills](https://aihero.dev/skills-setup-matt-pocock-skills) — without `docs/agents/issue-tracker.md`, it can't tell a GitHub repo from a local `.scratch/` convention, and falls back to writing the pack locally with publication marked blocked rather than guessing.
+The issue tracker `evidence` publishes to comes from [setup-sail-skills](https://aihero.dev/skills-setup-matt-pocock-skills) — without `docs/agents/issue-tracker.md`, it can't tell a GitHub repo from a local `.scratch/` convention, and falls back to writing the pack locally with publication marked blocked rather than guessing.
 
 ## Claims, not confidence
 
@@ -41,4 +41,4 @@ The unit `evidence` works in is the **claim** — a single assertion (an accepta
 grill-with-docs → to-spec → to-tickets → implement (→ evidence) → code-review
 ```
 
-Its closest neighbour is [implement](https://aihero.dev/skills-implement), which drives it automatically right after committing; [code-review](https://aihero.dev/skills-code-review) is the sibling closeout concern that stayed manual — one publishes what was verified, the other judges whether the diff was built and specced right. When you're unsure which skill or flow fits, [ask-matt](https://aihero.dev/skills-ask-matt) routes you.
+Its closest neighbour is [implement](https://aihero.dev/skills-implement), which drives it automatically right after committing; [code-review](https://aihero.dev/skills-code-review) is the sibling closeout concern that stayed manual — one publishes what was verified, the other judges whether the diff was built and specced right. When you're unsure which skill or flow fits, [ask-sail](https://aihero.dev/skills-ask-matt) routes you.
