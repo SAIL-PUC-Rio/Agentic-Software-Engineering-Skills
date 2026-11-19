@@ -1,3 +1,17 @@
+> [!WARNING]
+> **You are on the `beta` branch: these skills have NOT been empirically validated.**
+>
+> This branch contains work done after the event of **September 27, 2026**: new skills and changes to existing ones that we intend to validate later. For the set that was empirically evaluated at the event, use the [`under-review`](https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills/tree/under-review) branch.
+
+## Branches: validated vs. not yet validated
+
+| Branch | What it holds | Status |
+| --- | --- | --- |
+| [`under-review`](https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills/tree/under-review) | The skills exactly as they stood at the event of **September 27, 2026**. Nothing committed after that date is included. | **Empirically evaluated** at the event; under review. |
+| [`beta`](https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills/tree/beta) | Everything from `under-review`, plus all work done after September 27, 2026. | **Not validated yet.** Ideas we intend to validate later. |
+
+---
+
 <p align="center">
   <img src="./imgs/sail-skills-hero.jpg" alt="SAIL Skills: spec-driven development guided by empirical evidence" width="900">
 </p>
