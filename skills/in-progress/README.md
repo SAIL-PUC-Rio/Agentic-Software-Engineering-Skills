@@ -5,7 +5,7 @@ Beta. These skills are public on purpose: try them and report what breaks. They 
 Install one directly:
 
 ```bash
-npx skills@latest add Esduard/skills --skill=<name>
+npx skills@latest add https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills/tree/beta --skill=<name>
 ```
 
 - **[bdd-scenarios](./bdd-scenarios/SKILL.md)** — Construct Gherkin Feature files, customer-facing or developer-facing for internal components, from an already-agreed requirement (or, for a refactor, cited regression scenarios of existing behavior) and revise them through the Oliveira et al. (2019) scenario quality gate, reporting undecided behavior instead of inventing it. Model-invoked.

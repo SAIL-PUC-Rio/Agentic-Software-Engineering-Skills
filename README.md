@@ -1,17 +1,3 @@
-> [!WARNING]
-> **You are on the `beta` branch: these skills have NOT been empirically validated.**
->
-> This branch contains work done after the event of **September 27, 2026**: new skills and changes to existing ones that we intend to validate later. For the set that was empirically evaluated at the event, use the [`under-review`](https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills/tree/under-review) branch.
-
-## Branches: validated vs. not yet validated
-
-| Branch | What it holds | Status |
-| --- | --- | --- |
-| [`under-review`](https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills/tree/under-review) | The skills exactly as they stood at the event of **September 27, 2026**. Nothing committed after that date is included. | **Empirically evaluated** at the event; under review. |
-| [`beta`](https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills/tree/beta) | Everything from `under-review`, plus all work done after September 27, 2026. | **Not validated yet.** Ideas we intend to validate later. |
-
----
-
 <p align="center">
   <img src="./imgs/sail-skills-hero.jpg" alt="SAIL Skills: spec-driven development guided by empirical evidence" width="900">
 </p>
@@ -23,6 +9,14 @@ Agent skills for **spec-driven development guided by empirical evidence**, from 
 Coding agents are fast and confident. What they are not, by default, is accountable. These skills make every change pass through a spec you agreed on, scenarios you can execute, a test-first build, and an **evidence pack** that maps each claim to the command that proved it. The agent does the work; the repo keeps the proof.
 
 The skills are plain Markdown. They work with Claude Code, Codex, and any harness that reads `SKILL.md` files. Read them, fork them, change them.
+
+> [!WARNING]
+> **This is the `beta` branch: these skills have not been empirically validated yet.** It holds newer skills and reworked versions of the validated ones, ideas we intend to validate later. For the empirically evaluated release, use the [`under-review`](https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills/tree/under-review) branch.
+
+| Branch | What it holds | Status |
+| --- | --- | --- |
+| [`under-review`](https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills/tree/under-review) | The skill set SAIL has evaluated empirically. | **Empirically evaluated**; the evaluation is under review. |
+| **`beta`** (you are here) | Everything in `under-review`, plus newer skills and reworked versions of those. | **Not validated yet.** Ideas we intend to validate later. |
 
 ## The flow
 
@@ -49,10 +43,10 @@ Two routes, pick one. The plugin is a managed, read-only bundle. skills.sh write
 <summary><strong>Claude Code</strong></summary>
 
 ```
-/plugin install sail-skills --marketplace Esduard/skills
+/plugin install sail-skills --marketplace https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills.git#beta
 ```
 
-On Claude Code older than 2.1.275, add the marketplace first: `/plugin marketplace add Esduard/skills`, then `/plugin install sail-skills@sail`.
+On Claude Code older than 2.1.275, add the marketplace first: `/plugin marketplace add https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills.git#beta`, then `/plugin install sail-skills@sail`.
 
 </details>
 
@@ -60,7 +54,7 @@ On Claude Code older than 2.1.275, add the marketplace first: `/plugin marketpla
 <summary><strong>Codex, and other agents</strong></summary>
 
 ```bash
-npx skills@latest add Esduard/skills
+npx skills@latest add https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills/tree/beta
 ```
 
 Pick the skills you want, and which coding agents to install them on. **Make sure `setup-sail-skills` is one of them.**
@@ -133,4 +127,4 @@ SAIL studies how software teams work with coding agents. These skills are the in
 
 ## Origins and license
 
-This repository started as a fork of Matt Pocock's skills. The interview primitive (`grilling`), `grill-with-docs`, `domain-modeling`, `tdd`, `wayfinder`, `triage` and a few supporting skills still come from there, in some cases reworked. The spec, ticket, build, evidence and review chain is SAIL's. Everything is MIT licensed; see [LICENSE](./LICENSE).
+This repository started as a fork of [Matt Pocock's skills](https://github.com/mattpocock/skills). The interview primitive (`grilling`), `grill-with-docs`, `domain-modeling`, `tdd`, `wayfinder`, `triage` and a few supporting skills still come from there, in some cases reworked. The spec, ticket, build, evidence and review chain is SAIL's. Everything is MIT licensed; see [LICENSE](./LICENSE).

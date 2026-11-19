@@ -1,7 +1,7 @@
 Quickstart:
 
 ```bash
-npx skills add Esduard/skills --skill=evidence
+npx skills add https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills/tree/beta --skill=evidence
 ```
 
 ```bash

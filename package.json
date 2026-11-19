@@ -5,7 +5,7 @@
   "description": "SAIL Skills: spec-driven development for coding agents, guided by empirical evidence",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Esduard/skills"
+    "url": "https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills"
   },
   "license": "MIT",
   "scripts": {

@@ -1,6 +1,6 @@
 # Ship the skill set as a native Claude Code plugin; defer a native Codex plugin
 
-These skills are installable via [skills.sh](https://skills.sh) (`npx skills@latest add Esduard/skills`), which copies editable skill files into a user's project across Claude Code, Codex, and other Agent-Skills-standard harnesses. The other distribution people want is **plug-and-play**: subscribe to the set as a read-only, always-current bundle you don't edit. That is what native plugin systems provide.
+These skills are installable via [skills.sh](https://skills.sh) (`npx skills@latest add https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills/tree/beta`), which copies editable skill files into a user's project across Claude Code, Codex, and other Agent-Skills-standard harnesses. The other distribution people want is **plug-and-play**: subscribe to the set as a read-only, always-current bundle you don't edit. That is what native plugin systems provide.
 
 We ship a native **Claude Code plugin** and, for now, **defer** a native **Codex plugin**. The split is forced by how each ecosystem's plugin manifest selects skills, against this repo's bucketed layout.
 
@@ -18,7 +18,7 @@ The only robust ways to give Codex a single promoted-only path are (a) **restruc
 
 ## Decision
 
-- Ship the **Claude Code plugin** (`.claude-plugin/plugin.json` + `.claude-plugin/marketplace.json`), curated to the promoted set. The documented route is the repo's own marketplace: `/plugin install sail-skills --marketplace Esduard/skills` (or `marketplace add` then `install` on older Claude Code). The plugin is not listed in any third-party marketplace.
+- Ship the **Claude Code plugin** (`.claude-plugin/plugin.json` + `.claude-plugin/marketplace.json`), curated to the promoted set. The documented route is the repo's own marketplace: `/plugin install sail-skills --marketplace https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills.git#beta` (or `marketplace add` then `install` on older Claude Code). The plugin is not listed in any third-party marketplace.
 - Keep **skills.sh** as the universal installer — it serves Codex and other harnesses, so no Codex user is left without an install path.
 - **Defer** the native Codex plugin until we decide between restructuring `skills/` to promoted-only vs. committing a generated flat copy. Revisit when Codex either supports a `skills` array / include-list or preserves symlinks on install.
 
