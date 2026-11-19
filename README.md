@@ -1,3 +1,17 @@
+> [!IMPORTANT]
+> **You are on the `under-review` branch: the empirically evaluated skills.**
+>
+> This branch is frozen at the state of the skills used at the event of **September 27, 2026**. It is the only set backed by empirical evidence. Skills and changes created after that date are **not** here; they live on the [`beta`](https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills/tree/beta) branch and have not been validated.
+
+## Branches: validated vs. not yet validated
+
+| Branch | What it holds | Status |
+| --- | --- | --- |
+| [`under-review`](https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills/tree/under-review) | The skills exactly as they stood at the event of **September 27, 2026**. Nothing committed after that date is included. | **Empirically evaluated** at the event; under review. |
+| [`beta`](https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills/tree/beta) | Everything from `under-review`, plus all work done after September 27, 2026. | **Not validated yet.** Ideas we intend to validate later. |
+
+---
+
 <p>
   <a href="https://www.aihero.dev/s/skills-newsletter">
     <picture>
