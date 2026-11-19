@@ -1,3 +1,0 @@
-# Evidence runs as `implement`'s mandatory, automatic closeout stage
-
-`implement` used to close out by running `/code-review` before committing; that coupling was removed because the extra pass burdened token budget and staggered the build loop — `/code-review` became a separate step run manually after committing. `Evidence` deliberately reverses that direction: it runs automatically, inline in `implement`'s own context, immediately after every commit, publishing a factual evidence pack to the task's configured issue tracker. This is accepted for v1 specifically to observe real token cost in practice. If cost proves too high, moving `Evidence` to a sub-agent (mirroring `code-review`'s isolation pattern) is the anticipated escape hatch — not a redesign.
