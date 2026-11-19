@@ -1,15 +1,15 @@
 {
-  "name": "mattpocock",
+  "name": "sail",
   "owner": {
-    "name": "Matt Pocock",
-    "url": "https://www.aihero.dev"
+    "name": "Eduardo Motta",
+    "url": "https://github.com/Esduard"
   },
-  "description": "Matt Pocock's skills for real engineering, as an installable Claude Code plugin.",
+  "description": "SAIL Skills, as an installable Claude Code plugin.",
   "plugins": [
     {
-      "name": "mattpocock-skills",
+      "name": "sail-skills",
       "source": "./",
-      "description": "Matt Pocock's agent skills for real engineering — grilling, spec/ticket flows, TDD, code review, domain modelling and more.",
+      "description": "SAIL Skills: spec-driven development for coding agents, guided by empirical evidence.",
       "category": "engineering",
       "keywords": [
         "engineering",

@@ -1,7 +1,7 @@
 Quickstart:
 
 ```bash
-npx skills add mattpocock/skills --skill=evidence
+npx skills add SAIL-PUC-Rio/Agentic-Software-Engineering-Skills --skill=evidence
 ```
 
 ```bash
