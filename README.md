@@ -81,7 +81,6 @@ Skills split on one axis: who can invoke them. **User-invoked** skills run only 
 - **[implement-parallel](./skills/engineering/implement-parallel/SKILL.md)** — Build every independent subissue of a spec issue in waves: one subagent per subissue in its own worktree, merged back and proven green before the next wave.
 - **[triage](./skills/engineering/triage/SKILL.md)** — Move incoming issues and external PRs through a state machine of triage roles and write agent-ready briefs.
 - **[wayfinder](./skills/engineering/wayfinder/SKILL.md)** — Plan a huge chunk of work as a shared map of decision tickets on the issue tracker, and resolve them one at a time until the way is clear.
-- **[improve-codebase-architecture](./skills/engineering/improve-codebase-architecture/SKILL.md)** — Scan a codebase for deepening opportunities, present them as a visual report, then grill through whichever one you pick.
 
 **Model-invoked**
 
@@ -90,11 +89,9 @@ Skills split on one axis: who can invoke them. **User-invoked** skills run only 
 - **[code-review](./skills/engineering/code-review/SKILL.md)** — Two-axis review of the diff since a fixed point: Standards and Spec, as parallel subagents so neither pollutes the other.
 - **[domain-modeling](./skills/engineering/domain-modeling/SKILL.md)** — Build and sharpen the project's domain model: challenge terms, stress-test with edge cases, update `CONTEXT.md` and ADRs inline.
 - **[codebase-design](./skills/engineering/codebase-design/SKILL.md)** — The deep-module vocabulary for designing a module's shape: a lot of behaviour behind a small interface at a clean seam.
-- **[diagnosing-bugs](./skills/engineering/diagnosing-bugs/SKILL.md)** — A disciplined diagnosis loop for hard bugs and performance regressions: reproduce, minimise, hypothesise, instrument, fix, regression-test.
 - **[prototype](./skills/engineering/prototype/SKILL.md)** — A throwaway prototype that answers one design question.
 - **[research](./skills/engineering/research/SKILL.md)** — Investigate a question against primary sources in a background agent and leave a cited Markdown file in the repo.
 - **[resolving-merge-conflicts](./skills/engineering/resolving-merge-conflicts/SKILL.md)** — Work an in-progress merge or rebase conflict hunk by hunk, resolving by intent, never `--abort`.
-- **[wizard](./skills/engineering/wizard/SKILL.md)** — Generate an interactive bash wizard that walks a human through steps only they can perform.
 
 ### Productivity
 
@@ -102,9 +99,6 @@ Skills split on one axis: who can invoke them. **User-invoked** skills run only 
 
 - **[grill-me](./skills/productivity/grill-me/SKILL.md)** — The same relentless interview as `grill-with-docs`, stateless. For plans and designs with no repo under them.
 - **[handoff](./skills/productivity/handoff/SKILL.md)** — Compact the current conversation into a handoff document for another agent to pick up.
-- **[teach](./skills/productivity/teach/SKILL.md)** — Learn a skill or concept over multiple sessions, using the current directory as a stateful teaching workspace.
-- **[to-questionnaire](./skills/productivity/to-questionnaire/SKILL.md)** — Turn a decision you can't answer alone into a Markdown questionnaire for the one person who can.
-- **[wait-what](./skills/productivity/wait-what/SKILL.md)** — Fire it the moment a message doesn't land. The agent re-pitches it in plain English, using your `CONTEXT.md` vocabulary.
 
 **Model-invoked**
 
@@ -113,7 +107,7 @@ Skills split on one axis: who can invoke them. **User-invoked** skills run only 
 
 ### In progress
 
-Public on purpose, not shipped in the plugin. See [`skills/in-progress/`](./skills/in-progress/README.md) for the full list.
+Public on purpose, not shipped in the plugin. See [`skills/in-progress/`](./skills/in-progress/README.md).
 
 - **[perspec-me](./skills/in-progress/perspec-me/SKILL.md)** — Resolve one project question through a PerSpecML concern-guided interview, persisting the answer per Concern.
 
