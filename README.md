@@ -111,12 +111,6 @@ Public on purpose, not shipped in the plugin. See [`skills/in-progress/`](./skil
 
 - **[perspec-me](./skills/in-progress/perspec-me/SKILL.md)** — Resolve one project question through a PerSpecML concern-guided interview, persisting the answer per Concern.
 
-### References
-
-Not skills. Material the skills and their users read.
-
-- **[Cloud application architecture patterns](./skills/in-progress/yodor_cloud_patterns_catalog/README.md)** — 75 book patterns, each with a short introduction and source-cited aspect pages.
-
 ## Research context
 
 SAIL studies how software teams work with coding agents. These skills are the instrument: a skills-organized workflow we run in hackathons and industry projects, then evaluate with the participants. The evidence packs exist because we needed artifacts that can be audited after the fact, not because they are pleasant to write.

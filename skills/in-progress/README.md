@@ -9,5 +9,3 @@ npx skills@latest add SAIL-PUC-Rio/Agentic-Software-Engineering-Skills --skill=<
 ```
 
 - **[perspec-me](./perspec-me/SKILL.md)** — Resolve one project question through a PerSpecML concern-guided interview, walking the catalog by progressive disclosure and persisting the answer into per-Concern Resolution pages.
-
-Reference catalog (not an installable skill): [Cloud application architecture patterns](./yodor_cloud_patterns_catalog/README.md) — Browse 75 book patterns through short introductions and separate, source-cited aspect pages.

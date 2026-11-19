@@ -1,7 +1,0 @@
-# Extract Component — Problem
-
-**How can you separate a useful piece of the monolith without breaking its existing callers?**
-
-Source: [Website draft](https://kgb1001001.github.io/cloudadoptionpatterns/Strangler-Patterns/Extract-Component-and-Add-Fa%C3%A7ade/), “Extract Component and Add Façade,” problem statement; [Book](../../SOURCES.md#book), “Extract Component,” pp. 535–542 (physical PDF 579–586), problem statement. Book supplements the draft where noted.
-
-[Back to Extract Component](README.md)
