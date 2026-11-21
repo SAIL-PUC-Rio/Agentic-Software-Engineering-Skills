@@ -1,0 +1,23 @@
+{
+  "name": "sail",
+  "owner": {
+    "name": "Eduardo Motta",
+    "url": "https://github.com/Esduard"
+  },
+  "description": "SAIL Skills, as an installable Claude Code plugin.",
+  "plugins": [
+    {
+      "name": "sail-skills",
+      "source": "./",
+      "description": "SAIL Skills: spec-driven development for coding agents, guided by empirical evidence.",
+      "category": "engineering",
+      "keywords": [
+        "engineering",
+        "skills",
+        "tdd",
+        "code-review",
+        "grilling"
+      ]
+    }
+  ]
+}

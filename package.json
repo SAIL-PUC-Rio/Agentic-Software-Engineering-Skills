@@ -1,0 +1,21 @@
+{
+  "name": "sail-skills",
+  "version": "1.2.3",
+  "private": true,
+  "description": "SAIL Skills: spec-driven development for coding agents, guided by empirical evidence",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills"
+  },
+  "license": "MIT",
+  "scripts": {
+    "changeset": "changeset",
+    "version": "changeset version && node scripts/sync-plugin-version.mjs",
+    "check-plugin-version": "node scripts/sync-plugin-version.mjs --check"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.30.0"
+  },
+  "packageManager": "npm@10.9.4"
+}
