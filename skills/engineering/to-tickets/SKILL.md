@@ -22,6 +22,8 @@ If you have not already explored the codebase, do so to understand the current s
 
 Look for opportunities to prefactor the code to make the implementation easier. "Make the change easy, then make the easy change."
 
+If the source spec has `## Stories` and/or `## Behavioral Specifications`, note each story ID (`US-###`, `DS-###`, `MS-###`, `AS-###`, or a project-defined prefix) and each `BS-###` entry, with the **Stories:** line linking them. These IDs are the trace the tickets carry forward. Treat a story as an ID, a title, and its fields; never parse or depend on its wording, whatever its kind — a story may be prose in any shape. A legacy spec with `## User Stories` has no IDs: number its items yourself as `US-001`... in listed order only for your working notes and cite them in tickets by their quoted title. A spec with neither section has nothing to cite; skip the trace lines below rather than inventing IDs.
+
 ### 3. Draft vertical slices
 
 Break the work into **tracer bullet** tickets, then check the boundaries between them for **orthogonality**. The two are complementary, not redundant: tracer bullets buy completeness *within* a ticket — each slice is a whole vertical path through every layer — while orthogonality buys independence *between* tickets — no ticket's boundary leaks into its neighbours'.
@@ -34,6 +36,8 @@ Break the work into **tracer bullet** tickets, then check the boundaries between
 - Any prefactoring should be done first
 
 </vertical-slice-rules>
+
+When the spec has IDs, assign every ticket the stories it delivers and the BS entries it makes pass. Every BS entry should land in at least one ticket; a BS entry that spans several tickets is a signal to check the boundary. Copy unresolved points (`### Unresolved behavior`) into the ticket as open questions, not as scenarios. Never write a scenario of your own — behavior the spec never specified stays an ordinary acceptance criterion.
 
 Give each ticket its **blocking edges** — the other tickets that must complete before it can start. A ticket with no blockers can start immediately.
 
@@ -60,6 +64,7 @@ Present the proposed breakdown as a numbered list. For each ticket, show:
 - **Title**: short descriptive name
 - **Blocked by**: which other tickets (if any) must complete first
 - **What it delivers**: the end-to-end behaviour this ticket makes work
+- **Traces**: the story and BS IDs it delivers (only when the spec has them)
 
 Immediately after the list, render the dependency graph — don't hand-draw it, don't re-derive it, don't reason about layout yourself. Serialize the same tickets used for the list above as the canonical `{id, title, blocked_by}` JSON (`id` is each ticket's number, `blocked_by` is the list of blocking tickets' `id`s) and pipe it via stdin to the graph script bundled with this skill:
 
@@ -102,6 +107,10 @@ Do NOT close or modify any parent issue.
 
 **Status:** ready-for-agent
 
+**Stories:** `US-001`, `MS-002` — IDs with their titles. Omit when the spec has no story IDs.
+
+**Behavior:** `BS-003`, `BS-004` — followed by each named scenario's Gherkin, copied verbatim from the spec, so the ticket is self-contained, and its `**Audience:**` and `**Kind:**` lines when the spec entry has them. Omit when the spec has no BS entries.
+
 - [ ] Acceptance criterion 1
 - [ ] Acceptance criterion 2
 
@@ -117,6 +126,14 @@ A reference to the parent issue on the tracker (if the source was an existing is
 
 The end-to-end behaviour this ticket makes work, from the user's perspective — not layer-by-layer implementation.
 
+## Stories
+
+Story IDs with titles this ticket delivers. Omit when the spec has no story IDs.
+
+## Behavior
+
+The BS IDs this ticket makes pass, each followed by its Gherkin copied verbatim from the spec, so the ticket is self-contained, and by its `**Audience:**` and `**Kind:**` lines when the spec entry has them. Omit when the spec has no BS entries.
+
 ## Acceptance criteria
 
 - [ ] Criterion 1
@@ -128,4 +145,4 @@ The end-to-end behaviour this ticket makes work, from the user's perspective —
 
 </issue-template>
 
-In either form, avoid specific file paths or code snippets — they go stale fast. Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it and note briefly that it came from a prototype. Trim to the decision-rich parts — not a working demo, just the important bits.
+In either form, cited BS scenarios are copied, never reworded (and keep the entry's audience), and acceptance criteria add to them rather than restating them. Avoid specific file paths or code snippets — they go stale fast. Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it and note briefly that it came from a prototype. Trim to the decision-rich parts — not a working demo, just the important bits.

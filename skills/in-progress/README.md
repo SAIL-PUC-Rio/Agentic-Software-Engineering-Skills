@@ -1,11 +1,14 @@
 # In Progress
 
-Beta. These skills are public on purpose — try them and tell me what breaks. They're excluded from the plugin and the top-level README until they graduate to a stable bucket, they get no docs pages, and they can change or disappear without warning.
+Beta. These skills are public on purpose: try them and report what breaks. They are excluded from the plugin until they graduate to a promoted bucket, and they can change without warning.
 
-The plugin won't give you these. Install one directly:
+Install one directly:
 
 ```bash
-npx skills@latest add SAIL-PUC-Rio/Agentic-Software-Engineering-Skills --skill=<name>
+npx skills@latest add https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills/tree/beta --skill=<name>
 ```
 
-- **[perspec-me](./perspec-me/SKILL.md)** — Resolve one project question through a PerSpecML concern-guided interview, walking the catalog by progressive disclosure and persisting the answer into per-Concern Resolution pages.
+- **[bdd-scenarios](./bdd-scenarios/SKILL.md)** — Construct Gherkin Feature files, customer-facing or developer-facing for internal components, from an already-agreed requirement (or, for a refactor, cited regression scenarios of existing behavior) and revise them through the Oliveira et al. (2019) scenario quality gate, reporting undecided behavior instead of inventing it. Model-invoked.
+- **[grafo-dependencias](./grafo-dependencias/SKILL.md)** — Create or update architectural dependency maps (Mermaid `.mmd` + rendered SVG + a Markdown page with a component table) for any code flow, language-agnostic, with subgraphs per flow stage, colors per architectural layer, and edges labeled with the real methods called; never prunes real connections without the user's ok. Written in Portuguese; copied from the CapiWatt hackathon repo. Model-invoked.
+- **[perspec-me](./perspec-me/SKILL.md)** — Resolve one project question through a PerSpecML concern-guided interview, walking the catalog by progressive disclosure and persisting the answer into per-Concern Resolution pages. Model-invoked.
+- **[show-me](./show-me/SKILL.md)** — Explain the current topic visually with the smallest view that fits: pseudocode, call trees, component or file trees, Mermaid, diffs, or one focused HTML file. Vendored verbatim from [humanlayer/skills](https://github.com/humanlayer/skills/tree/main/plugins/show-me/skills/show-me). User-invoked.

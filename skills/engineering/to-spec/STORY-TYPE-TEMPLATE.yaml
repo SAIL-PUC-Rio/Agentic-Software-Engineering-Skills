@@ -1,0 +1,27 @@
+# Copy this file to `.agents/spec/story-types.yaml` in your project and fill it in.
+# Delete every comment and every block you do not use. Rules: STORY-TYPES.md, "Project-defined kinds".
+
+# Optional. Narrows the built-in kinds to this list. Omit to keep all four.
+# Names: user, data, model, agent.
+default_story_types:
+  - user
+  - data
+  - model
+  - agent
+
+# One block per custom kind. The block key is the kind name.
+custom_story_types:
+  experiment:                # <kind name, lowercase>
+    prefix: ES               # <2 to 3 capital letters, unique; IDs read ES-001, ES-002>
+    when: >-                 # <when to choose this kind over the others; one or two sentences>
+      The work is a test of a hypothesis: change one thing, collect evidence,
+      and judge it against a stated success condition.
+    audience: developer      # optional: customer | developer. Default audience of this kind's Behavioral Specifications; omit for customer
+    fields:                  # required; each needs a value or `Unresolved: <what is missing>`
+      - hypothesis
+      - intervention
+      - evidence
+      - success_condition
+    optional_fields:         # optional; added only when the conversation already stated them
+      - baseline
+      - duration

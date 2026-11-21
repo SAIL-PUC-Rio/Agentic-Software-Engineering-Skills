@@ -6,12 +6,12 @@ There are two routes. They are exclusive: the plugin is a managed, read-only bun
 
 ## Claude Code, the plugin
 
-`.claude-plugin/marketplace.json` makes this repo its own single-plugin marketplace. One line installs from it on Claude Code 2.1.275 or later; older versions run `/plugin marketplace add SAIL-PUC-Rio/Agentic-Software-Engineering-Skills` first, then `/plugin install sail-skills@sail`.
+`.claude-plugin/marketplace.json` makes this repo its own single-plugin marketplace. One line installs from it on Claude Code 2.1.275 or later; older versions run `/plugin marketplace add https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills.git#beta` first, then `/plugin install sail-skills@sail`.
 
 <canonical-block name="claude-code">
 
 ```
-/plugin install sail-skills --marketplace SAIL-PUC-Rio/Agentic-Software-Engineering-Skills
+/plugin install sail-skills --marketplace https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills.git#beta
 ```
 
 </canonical-block>
@@ -25,7 +25,7 @@ The plugin is Claude Code only. Everywhere else, [skills.sh](https://skills.sh) 
 <canonical-block name="skills-sh-whole-set">
 
 ```bash
-npx skills@latest add SAIL-PUC-Rio/Agentic-Software-Engineering-Skills
+npx skills@latest add https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills/tree/beta
 ```
 
 Pick the skills you want, and which coding agents to install them on. **Make sure `setup-sail-skills` is one of them.**
@@ -37,7 +37,7 @@ Pick the skills you want, and which coding agents to install them on. **Make sur
 <canonical-block name="skills-sh-one-skill">
 
 ```bash
-npx skills@latest add SAIL-PUC-Rio/Agentic-Software-Engineering-Skills --skill=<name>
+npx skills@latest add https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills/tree/beta --skill=<name>
 ```
 
 ```bash

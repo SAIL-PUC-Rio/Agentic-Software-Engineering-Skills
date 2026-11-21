@@ -1,0 +1,87 @@
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'background': '#ffffff',
+      'titleColor': '#000000',
+      'lineColor': '#000000',
+      'edgeLabelBackground': '#ffffff',
+      'textColor': '#000000',
+      'edgeLabelTextColor': '#000000'
+    },
+    'themeCSS': '.edgeLabel { color: #000000 !important; }'
+  }
+}%%
+flowchart TD
+
+    %% -------------------------------------------------------------
+    %% Definições de Estilos das Camadas Arquiteturais
+    %% -------------------------------------------------------------
+    classDef pres fill:#f3e8ff,stroke:#9333ea,stroke-width:1.5px,color:#7e22ce;
+    classDef core fill:#e0f2fe,stroke:#0284c7,stroke-width:1.5px,color:#0369a1;
+    classDef infra fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#15803d;
+    classDef entity fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#b45309;
+    classDef boundary fill:#fff7ed,stroke:#ea580c,stroke-width:2px,stroke-dasharray: 5 5,color:#c2410c;
+    classDef boot fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px,color:#334155;
+
+    %% Modificadores extras opcionais
+    classDef shortLived stroke-dasharray: 6 3;
+    classDef highlight stroke-width:3px;
+
+    %% -------------------------------------------------------------
+    %% Subgraphs por Etapas do Fluxo (Cronológicas / Lógicas)
+    %% -------------------------------------------------------------
+
+    %% Etapa 1: Ponto de Entrada (Entrypoint / Rota / Controller)
+    subgraph SB1Entrypoints ["1. Ponto de Entrada (Entrypoint)"]
+        direction LR
+        ApiRoute["ApiRoute<br/>(POST /v1/recurso)"]
+    end
+
+    %% Etapa 2: Processamento & Regras de Negócio
+    subgraph SB2DomainLogic ["2. Processamento & Regras de Negócio"]
+        direction TB
+        ServiceManager["ServiceManager<br/>(IServiceContract)"]
+        EntityModel(["EntityModel"])
+
+        ServiceManager -.- EntityModel
+    end
+
+    %% Etapa 3: Integração Externa & Persistência
+    subgraph SB3Integration ["3. Integração Externa & Persistência"]
+        direction TB
+        DatabaseRepo["DatabaseRepo<br/>(IRepository)"]
+        ExternalClient["ExternalClient<br/>(IHttpClient)"]
+        ExternalService{{"Sistema ou API Externa<br/>Módulo Externo / DB"}}
+
+        DatabaseRepo -->|"save() / findById()"| ExternalService
+        ExternalClient -->|"post()"| ExternalService
+    end
+
+    %% -------------------------------------------------------------
+    %% Conexões entre Etapas
+    %% -------------------------------------------------------------
+
+    %% B1 -> B2
+    ApiRoute -->|"execute()"| ServiceManager
+
+    %% B2 -> B3
+    ServiceManager -->|"persist()"| DatabaseRepo
+    ServiceManager -->|"fetchData()"| ExternalClient
+
+    %% Alinhamento invisível para estabilidade de layout (se necessário)
+    ApiRoute ~~~ ServiceManager
+
+    %% -------------------------------------------------------------
+    %% Aplicação das Classes de Estilo
+    %% -------------------------------------------------------------
+    class ApiRoute pres;
+    class ServiceManager core;
+    class DatabaseRepo,ExternalClient infra;
+    class EntityModel entity;
+    class ExternalService boundary;
+
+    %% Estilos visuais dos Subgraphs
+    style SB1Entrypoints fill:#f8fafc,stroke:#94a3b8,stroke-width:1px,stroke-dasharray: 4 4;
+    style SB2DomainLogic fill:#f8fafc,stroke:#94a3b8,stroke-width:1px,stroke-dasharray: 4 4;
+    style SB3Integration fill:#f8fafc,stroke:#94a3b8,stroke-width:1px,stroke-dasharray: 4 4;

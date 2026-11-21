@@ -1,0 +1,78 @@
+2026-09-19: incremental structural checks during authoring.
+Command: python3 check_catalog.py
+Pilots together: PASS 2/75 patterns, 28 Markdown files, plus self-test.
+Each remaining named slice was then added and checked in order:
+
+Cloud Application: PASS: 3/75 patterns; 38 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Big Ball of Mud: PASS: 4/75 patterns; 48 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Modular Monolith: PASS: 5/75 patterns; 58 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Distributed Architecture: PASS: 6/75 patterns; 68 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Cloud-Native Architecture: PASS: 7/75 patterns; 78 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Application Package: PASS: 8/75 patterns; 88 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Service API: PASS: 9/75 patterns; 98 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Stateless Application: PASS: 10/75 patterns; 108 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Replicable Application: PASS: 11/75 patterns; 118 Markdown files; links, anchors, reachability, identity, aspects and sources.
+External Configuration: PASS: 12/75 patterns; 128 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Backend Service: PASS: 13/75 patterns; 138 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Microservices: PASS: 14/75 patterns; 148 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Domain Microservice: PASS: 15/75 patterns; 158 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Adapter Microservice: PASS: 16/75 patterns; 168 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Dispatcher: PASS: 17/75 patterns; 178 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Polyglot Development: PASS: 18/75 patterns; 188 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Self-Managed Data Store: PASS: 19/75 patterns; 198 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Service Orchestrator: PASS: 20/75 patterns; 208 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Model Around the Domain: PASS: 21/75 patterns; 218 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Ubiquitous Language: PASS: 22/75 patterns; 227 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Event Storming: PASS: 23/75 patterns; 237 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Domain Event: PASS: 24/75 patterns; 247 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Bounded Context: PASS: 25/75 patterns; 257 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Application Services: PASS: 26/75 patterns; 263 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Context Map: PASS: 27/75 patterns; 271 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Aggregate: PASS: 28/75 patterns; 281 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Repositories: PASS: 29/75 patterns; 290 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Domain Service: PASS: 30/75 patterns; 300 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Anti-Corruption Layer: PASS: 31/75 patterns; 310 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Event Choreography: PASS: 32/75 patterns; 320 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Event: PASS: 33/75 patterns; 330 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Reactive Component: PASS: 34/75 patterns; 340 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Event Notifier: PASS: 35/75 patterns; 350 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Event API: PASS: 36/75 patterns; 360 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Event Backbone: PASS: 37/75 patterns; 370 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Cloud Database: PASS: 38/75 patterns; 380 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Replicated Database: PASS: 39/75 patterns; 390 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Configuration Database: PASS: 40/75 patterns; 400 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Application Database: PASS: 41/75 patterns; 410 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Relational Database: PASS: 42/75 patterns; 420 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Document Database: PASS: 43/75 patterns; 430 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Key-Value Database: PASS: 44/75 patterns; 440 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Graph Database: PASS: 45/75 patterns; 450 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Columnar Database: PASS: 46/75 patterns; 460 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Data Module: PASS: 47/75 patterns; 470 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Polyglot Persistence: PASS: 48/75 patterns; 480 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Database-as-a-Service: PASS: 49/75 patterns; 490 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Command Query Responsibility Segregation (CQRS): PASS: 50/75 patterns; 500 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Client Application: PASS: 51/75 patterns; 510 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Browser Application: PASS: 52/75 patterns; 520 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Web Form Application: PASS: 53/75 patterns; 530 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Single-Page Application: PASS: 54/75 patterns; 540 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Micro Frontend: PASS: 55/75 patterns; 550 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Mobile Application: PASS: 56/75 patterns; 560 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Command-Line Interface: PASS: 57/75 patterns; 570 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Public API: PASS: 58/75 patterns; 580 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Interaction Model: PASS: 59/75 patterns; 590 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Lift and Shift: PASS: 60/75 patterns; 600 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Virtualize the Application: PASS: 61/75 patterns; 610 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Containerize the Application: PASS: 62/75 patterns; 620 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Refactor the Monolith: PASS: 63/75 patterns; 630 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Start Small: PASS: 64/75 patterns; 640 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Pave the Road: PASS: 65/75 patterns; 650 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Strangle the Monolith: PASS: 66/75 patterns; 660 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Wrap the Monolith: PASS: 67/75 patterns; 669 Markdown files; links, anchors, reachability, identity, aspects and sources.
+New Features as Microservices: PASS: 68/75 patterns; 679 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Transform Monolith into Microservices: PASS: 69/75 patterns; 689 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Hairline Cracks: PASS: 70/75 patterns; 699 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Macro Service: PASS: 71/75 patterns; 709 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Refactor then Extract: PASS: 72/75 patterns; 719 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Replace as Microservice: PASS: 73/75 patterns; 729 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Monolith to Microservice Proxy: PASS: 74/75 patterns; 739 Markdown files; links, anchors, reachability, identity, aspects and sources.
+Playback Testing: PASS: 75/75 patterns; 749 Markdown files; links, anchors, reachability, identity, aspects and sources.

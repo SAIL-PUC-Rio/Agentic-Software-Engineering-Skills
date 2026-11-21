@@ -1,14 +1,14 @@
 Quickstart:
 
 ```bash
-npx skills add SAIL-PUC-Rio/Agentic-Software-Engineering-Skills --skill=evidence
+npx skills add https://github.com/SAIL-PUC-Rio/Agentic-Software-Engineering-Skills/tree/beta --skill=evidence
 ```
 
 ```bash
 npx skills update evidence
 ```
 
-[Source](https://github.com/mattpocock/skills/tree/main/skills/engineering/evidence)
+[Source](https://github.com/Esduard/skills/tree/main/skills/engineering/evidence)
 
 ## What it does
 
@@ -16,21 +16,26 @@ npx skills update evidence
 
 ## When to reach for it
 
-Type `/evidence`, or the agent reaches for it automatically when a task fits — most often because [implement](https://aihero.dev/skills-implement) just committed and runs it as a mandatory closeout. Reach for it directly when you want to regenerate or inspect the evidence for a commit that's already landed, without redoing the implementation.
+Type `/evidence`, or the agent reaches for it automatically when a task fits — most often because [implement](implement.md) just committed and runs it as a mandatory closeout. Reach for it directly when you want to regenerate or inspect the evidence for a commit that's already landed, without redoing the implementation.
 
 ## Prerequisites
 
-The issue tracker `evidence` publishes to comes from [setup-sail-skills](https://aihero.dev/skills-setup-matt-pocock-skills) — without `docs/agents/issue-tracker.md`, it can't tell a GitHub repo from a local `.scratch/` convention, and falls back to writing the pack locally with publication marked blocked rather than guessing.
+The issue tracker `evidence` publishes to comes from [setup-sail-skills](../../skills/engineering/setup-sail-skills/SKILL.md) — without `docs/agents/issue-tracker.md`, it can't tell a GitHub repo from a local `.scratch/` convention, and falls back to writing the pack locally with publication marked blocked rather than guessing.
 
 ## Claims, not confidence
 
 The unit `evidence` works in is the **claim** — a single assertion (an acceptance criterion, an invariant) given a stable ID (`CLM-001`) and a status from a fixed vocabulary: `PASS`, `FAIL`, `PARTIAL`, `NOT_RUN`, `NOT_APPLICABLE`, `UNKNOWN`. A claim only reaches `PASS` because a specific, cited command or diff proved it — never because the surrounding narrative sounds finished. Negative evidence — a failing test, a check that didn't run, a credential that wasn't available — stays in the pack exactly as visibly as a pass.
+
+## Behavioral Specifications
+
+When the originating spec has `## Behavioral Specifications`, each in-scope scenario becomes its own claim, whatever its audience, citing its `BS-###` and story IDs, backed by the run of the test at the agreed seam. The pack also records the `bdd-scenarios` review of those scenarios as an evidence artifact, so it shows whether the specification met its quality gate as well as whether the code met the specification. A scenario with no verifying test shows as `NOT_RUN` or `NOT_APPLICABLE`, never `PASS`. `bdd-scenarios` is a beta skill; where it isn't installed, the review artifact is recorded as `NOT_RUN`. For regression scenarios the pack adds a claim that the existing suite passes on the base and the current revision, with both runs recorded, and that claim is not `PASS` unless both ran. A spec without Behavioral Specifications gets the same pack as before.
 
 ## It's working if
 
 - Every row in the scope-to-proof map cites a real evidence ID, not just a claim.
 - A `NOT_RUN` or `UNKNOWN` claim is still visible in the executive result, not smoothed over.
 - It reuses `implement`'s own command output where it can, rather than rerunning the whole suite a second time to manufacture evidence.
+- For a spec with Behavioral Specifications, every in-scope `BS-###` has its own claim row, and an untested one reads `NOT_RUN` or `NOT_APPLICABLE`; a regression spec also shows a suite claim with both a base and a current run.
 - Regenerating the pack for the same commit updates the existing published copy instead of posting a duplicate.
 
 ## Where it fits
@@ -41,4 +46,4 @@ The unit `evidence` works in is the **claim** — a single assertion (an accepta
 grill-with-docs → to-spec → to-tickets → implement (→ evidence) → code-review
 ```
 
-Its closest neighbour is [implement](https://aihero.dev/skills-implement), which drives it automatically right after committing; [code-review](https://aihero.dev/skills-code-review) is the sibling closeout concern that stayed manual — one publishes what was verified, the other judges whether the diff was built and specced right. When you're unsure which skill or flow fits, [ask-sail](https://aihero.dev/skills-ask-matt) routes you.
+Its closest neighbour is [implement](implement.md), which drives it automatically right after committing; [code-review](code-review.md) is the sibling closeout concern that stayed manual — one publishes what was verified, the other judges whether the diff was built and specced right. When you're unsure which skill or flow fits, [ask-sail](../../skills/engineering/ask-sail/SKILL.md) routes you.

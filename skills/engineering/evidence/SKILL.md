@@ -24,13 +24,23 @@ Determine task mode, task reference, repository root, current branch, and base/c
 
 Pull claims from acceptance criteria, Definition of Done, the implementation plan, invariants, and the final implementation summary. Give each a stable ID (`CLM-001`, `CLM-002`, …). "Implementation completed" is never itself a claim's evidence.
 
+**When the originating spec has `## Behavioral Specifications`**, every in-scope `BS-###` also becomes a claim, one per scenario, whatever its `**Audience:**`. Its Source records the BS ID and the story IDs on its **Stories:** line (e.g. `BS-002 (STORY-001, STORY-003)`), and its requirement is the scenario title. In scope means the ticket or spec slice names it. 
+
+**When those include `**Kind:** regression` entries**, add one more claim: the existing test suite passes on the base revision and on the current one. A "suite passed" `PASS` needs both runs, the same command each time, each recorded as its own EVD; a missing base run makes it `NOT_RUN`. A spec with no such section, including a legacy `## User Stories` one, or with no regression entries, adds nothing here.
+
 ### 3. Build the scope-to-proof map
 
 For each claim, record its source, the implementation surface it maps to, how it's verified, the evidence IDs backing it, and a status. The full status vocabulary and its rules live in [claim-labels.md](./claim-labels.md) — use it as-is, never a status outside that table.
 
+A BS-derived claim's Verification is the test at the seam the spec's Testing Decisions assigns to that BS ID. Its status comes from that test's actual run: `PASS` or `FAIL` from the run, `NOT_RUN` if a verifying test exists but wasn't executed, `NOT_APPLICABLE` if no test verifies the scenario. A scenario with no verifying test is never `PASS`, and the claim carries no test EVD. This holds for each regression BS: its claim rests on a test that passes at its seam on the current revision, and the suite claim lists it.
+
 ### 4. Collect evidence — reuse before rerunning
 
 Prefer the commands, exit codes, and output `implement` already produced in this same conversation — reusing them is what keeps this step's token cost down. Run an additional command only to close a specific gap, and never rerun anything expensive, destructive, production-facing, or credential-sensitive merely to manufacture evidence.
+
+For a BS-derived claim, the EVD is the run of the test at the agreed seam that verifies it, and that EVD lists the BS claim in its `claim_ids`. Test runs `implement` already produced count; find the test by the BS ID in its name or comment, or by the ticket's seam mapping.
+
+Also record the `bdd-scenarios` review-mode result for the in-scope scenarios as one EVD artifact (category `decision`), citing the per-attribute `PASS`/`REVISE`/`NOT_APPLICABLE` findings and any `### Unresolved behavior`. Reuse a review already run in this conversation. Otherwise, if `bdd-scenarios` is installed, call the Skill tool with "bdd-scenarios" and run its review mode over the in-scope Gherkin; that skill is a beta, so if it is not installed, record the artifact as `NOT_RUN` and say why. The review artifact's status reports the review only, and never raises a claim's status.
 
 For every command (reused or newly run), keep the exact command, working directory, UTC time, exit code, and a concise result.
 

@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# NOTE: This is a dev-only script, intended for use by maintainers of this repo.
-# It is not a supported installer. Modifications to it — or requests for
-# modifications — will not be approved.
+# Dev-only script for maintainers of this repo. Not a supported installer.
 #
 # Links all skills in the repository into the local skill directories used by
 # each agent harness:
 #   - ~/.claude/skills  — Claude Code
 #   - ~/.agents/skills  — Codex and other Agent Skills-compatible harnesses
 # Each entry is a symlink into this repo, so a `git pull` is all that's needed
-# to keep installed skills up to date.
+# to keep installed skills up to date. Links into this repo whose target no
+# longer exists (a deleted or renamed skill) are pruned.
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 DESTS=("$HOME/.claude/skills" "$HOME/.agents/skills")
@@ -40,6 +39,20 @@ for DEST in "${DESTS[@]}"; do
   fi
 
   mkdir -p "$DEST"
+
+  # Prune dangling links that point into this repo.
+  for link in "$DEST"/*; do
+    [ -L "$link" ] || continue
+    target="$(readlink "$link")"
+    case "$target" in
+      "$REPO"/*)
+        if [ ! -e "$link" ]; then
+          rm "$link"
+          echo "pruned $(basename "$link") -> $target ($DEST)"
+        fi
+        ;;
+    esac
+  done
 
   for i in "${!names[@]}"; do
     name="${names[$i]}"
